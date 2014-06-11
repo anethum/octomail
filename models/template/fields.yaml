@@ -1,0 +1,113 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+
+  title:
+    label: Title
+    span: left
+    placeholder: New template
+
+  slug:
+    label: slug
+    span: right
+    placeholder: new-template-slug
+    attributes:
+      data-input-preset: 'input[name="Template[title]"]'
+      data-input-preset-type: slug
+      data-input-preset-closest-parent: form
+
+  toolbar:
+    type: partial
+    path: template_toolbar
+    cssClass: collapse-visible
+
+# tabs:
+#   fields:
+
+#     excerpt:
+#       tab: Details
+#       label: Excerpt
+#       type: textarea
+#       size: small
+
+secondaryTabs:
+  stretch: true
+  fields:
+    content_html:
+      tab: Edit
+      stretch: true
+      type: OctoDevel\OctoMail\FormWidgets\Trumbowyg
+        
+    fields:
+       tab: Manage
+       label: Validation Fields
+       type: text
+       span: left fullwidth
+       size: big
+       placeholder: Enter the fields validation rules
+       
+    lang:
+       tab: Manage
+       label: Language
+       type: dropdown
+       options:
+           nl: Dutch           
+           en: English
+           de: German
+           ja: Japanese                      
+           br: Portuguese (Brazilian)
+           pt: Portuguese
+           ru: Russian
+           sv: Swedish
+           tr: Turkish
+       span: left
+       size: small
+       
+    subject:
+       tab: Manage
+       label: Subject
+       type: text
+       span: right
+       size: small
+       placeholder: Enter the email subject
+       
+    sender_name:
+       tab: Manage
+       label: Sender Name
+       type: text
+       span: left
+       size: small
+       placeholder: Enter the sender name
+       
+    sender_email:
+       tab: Manage
+       label: Sender Email
+       type: text
+       span: right
+       size: small
+       placeholder: Enter the sender email
+    
+    recipient_name:
+       tab: Manage
+       label: Recipient Name
+       type: text
+       span: left
+       size: small
+       placeholder: Enter the recipient name
+       
+    recipient_email:
+       tab: Manage
+       label: Recipient Email
+       type: text
+       span: right
+       size: small
+       placeholder: Enter the recipient email
+       
+    confirmation_text:
+       tab: Manage
+       label: Confirmation Text
+       type: textarea
+       size: small
+       placeholder: Enter your confirmation text

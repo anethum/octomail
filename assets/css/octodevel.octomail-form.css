@@ -1,0 +1,6 @@
+.fancy-layout .control-tabs > div.tab-content > div.tab-pane, .fancy-layout.control-tabs > div.tab-content > div.tab-pane {
+    padding: 15px;
+}
+.form-group.fullwidth{
+    width: 100%;
+}

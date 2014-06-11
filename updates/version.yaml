@@ -1,0 +1,13 @@
+1.0.1:
+    - First version
+    - create_tables.php
+    - seed_all_database.php
+1.0.2:
+    - Fix access permissions
+1.0.3:
+    - Added mail storage logs
+    - create_logs_table.php
+1.0.4:
+    - Fixed some bugs
+1.0.5:
+    - Fixed template logs bug
