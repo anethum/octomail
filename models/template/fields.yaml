@@ -39,24 +39,33 @@ secondaryTabs:
       tab: Edit
       stretch: true
       type: OctoDevel\OctoMail\FormWidgets\Trumbowyg
-        
+
     fields:
        tab: Manage
        label: Validation Fields
        type: text
-       span: left fullwidth
-       size: big
+       span: left
+       size: small
        placeholder: Enter the fields validation rules
-       
+
+    autoresponse:
+       tab: Manage
+       label: Auto-response
+       type: dropdown
+       span: right
+       options:
+          1: Yes
+          0: No
+
     lang:
        tab: Manage
        label: Language
        type: dropdown
        options:
-           nl: Dutch           
+           nl: Dutch
            en: English
            de: German
-           ja: Japanese                      
+           ja: Japanese
            br: Portuguese (Brazilian)
            pt: Portuguese
            ru: Russian
@@ -64,7 +73,7 @@ secondaryTabs:
            tr: Turkish
        span: left
        size: small
-       
+
     subject:
        tab: Manage
        label: Subject
@@ -72,7 +81,7 @@ secondaryTabs:
        span: right
        size: small
        placeholder: Enter the email subject
-       
+
     sender_name:
        tab: Manage
        label: Sender Name
@@ -80,7 +89,7 @@ secondaryTabs:
        span: left
        size: small
        placeholder: Enter the sender name
-       
+
     sender_email:
        tab: Manage
        label: Sender Email
@@ -88,7 +97,7 @@ secondaryTabs:
        span: right
        size: small
        placeholder: Enter the sender email
-    
+
     recipient_name:
        tab: Manage
        label: Recipient Name
@@ -96,7 +105,7 @@ secondaryTabs:
        span: left
        size: small
        placeholder: Enter the recipient name
-       
+
     recipient_email:
        tab: Manage
        label: Recipient Email
@@ -104,7 +113,7 @@ secondaryTabs:
        span: right
        size: small
        placeholder: Enter the recipient email
-       
+
     confirmation_text:
        tab: Manage
        label: Confirmation Text

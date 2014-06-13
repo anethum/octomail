@@ -167,6 +167,14 @@ class Template extends ComponentBase
             $log->sent_at = date('Y-m-d H:i:s');
             $log->data = $post;
             $log->save();
+
+            if( (isset($post['email']) and $post['email']) and (isset($post['name']) and $post['name']) and (isset($template['autoresponse']) and $template['autoresponse']) )
+            {
+                Mail::send('octodevel.octomail::emails.autoresponse', $post, function($autoresponse) use ($data)
+                {
+                    $autoresponse->to($post['email'], $post['name']);
+                });
+            }
         }
 
         $this->page["result"] = (bool)$result;

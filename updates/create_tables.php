@@ -20,6 +20,7 @@ class CreateTables extends Migration
                 $table->string('subject')->nullable();
                 $table->string('filename')->index()->unique();
                 $table->string('lang');
+                $table->integer('autoresponse')->default(1);
                 $table->text('content')->nullable();
                 $table->text('content_html')->nullable();
                 $table->text('fields')->nullable();

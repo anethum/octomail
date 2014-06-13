@@ -13,11 +13,12 @@ class SeedAllTables extends Seeder
         //
         // Add a Welcome template or something
         //
-	
+
         Template::create([
 	    'title' => 'Demo Template',
 	    'slug' => 'demo-template',
 	    'lang' => 'en',
+        'autoresponse' => 1,
 	    'content' => "Hello {{ sender_name }},\r\n"
 	    . "An user sent you a message from website.\r\n"
 	    . "Name: {{ name }}\r\n"

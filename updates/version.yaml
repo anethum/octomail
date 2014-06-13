@@ -11,3 +11,6 @@
     - Fixed some bugs
 1.0.5:
     - Fixed template logs bug
+1.0.6:
+    - Implemented auto-response
+    - update_templates_table.php

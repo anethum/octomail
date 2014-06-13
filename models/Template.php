@@ -22,6 +22,7 @@ class Template extends Model
         'recipient_name' => '',
         'recipient_email' => 'email',
         'confirmation_text' => '',
+        'autoresponse' => '',
     ];
 
     /**

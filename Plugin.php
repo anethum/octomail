@@ -1,6 +1,5 @@
 <?php namespace OctoDevel\OctoMail;
 
-use \Lang;
 use Backend;
 use System\Classes\PluginBase;
 
@@ -27,7 +26,7 @@ class Plugin extends PluginBase
     {
         return [
             'octomail' => [
-                'label'       => Lang::get('octodevel.octomail::lang.octomail.name'),
+                'label'       => 'Octo Mail',
                 'url'         => Backend::url('octodevel/octomail/templates'),
                 'icon'        => 'icon-envelope',
                 'permissions' => ['octodevel.octomail.*'],
@@ -35,13 +34,13 @@ class Plugin extends PluginBase
 
                 'sideMenu' => [
                     'templates' => [
-                        'label'       => Lang::get('octodevel.octomail::lang.templates.title'),
+                        'label'       => 'Templates',
                         'icon'        => 'icon-list-alt',
                         'url'         => Backend::url('octodevel/octomail/templates'),
                         'permissions' => ['octodevel.octomail.access_templates'],
                     ],
                     'logs' => [
-                        'label'       => Lang::get('octodevel.octomail::lang.contact_log.title'),
+                        'label'       => 'Contact Logs',
                         'icon'        => 'icon-file-text-o',
                         'url'         => Backend::url('octodevel/octomail/logs'),
                         'permissions' => ['octodevel.octomail.access_logs'],
@@ -76,8 +75,15 @@ class Plugin extends PluginBase
     public function registerPermissions()
     {
         return [
-            'octodevel.octomail.access_templates' => ['label' => Lang::get('octodevel.octomail::lang.templates.permission'), 'tab' => 'OctoDevel'],
-            'octodevel.octomail.access_logs' => ['label' => Lang::get('octodevel.octomail::lang.contact_log.permission'), 'tab' => 'OctoDevel']
+            'octodevel.octomail.access_templates' => ['label' => 'OctoMail - Manage Templates', 'tab' => 'OctoDevel'],
+            'octodevel.octomail.access_logs' => ['label' => 'OctoMail - View Logs', 'tab' => 'OctoDevel']
+        ];
+    }
+
+    public function registerEmailTemplates()
+    {
+        return [
+            'octodevel.octomail::emails.autoresponse' => 'Send a response email to user when send a message from Octo Mail.',
         ];
     }
 }
