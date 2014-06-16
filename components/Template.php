@@ -114,6 +114,11 @@ class Template extends ComponentBase
     // Set some request variables
     $post['ip_address'] = $request->getClientIp();
     $post['user_agent'] = $request->headers->get('User-Agent');
+    $post['sender_name'] = $template['sender_name'];
+    $post['sender_email'] = $template['sender_email'];
+    $post['recipient_name'] = $template['recipient_name'] ? $template['recipient_name'] : EmailSettings::get('sender_name');
+    $post['recipient_email'] = $template['recipient_email'] ? $template['recipient_email'] : EmailSettings::get('sender_email');
+    $post['default_subject'] = $template['subject'];
 
     // Set some usable data
     $data = [
@@ -152,35 +157,36 @@ class Template extends ComponentBase
             throw new ValidationException($validation);
     }
 
-        $result = Mail::send('octodevel.octomail::emails.view-' . $template['slug'], $post, function($message) use($data)
+    Mail::send('octodevel.octomail::emails.view-' . $template['slug'], $post, function($message) use($data)
+    {
+        $message->from($data['sender_email'], $data['sender_name']);
+        $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
+    });
+
+    $log = new RegisterLog;
+    $log->template_id = $template['id'];
+    $log->sender_agent = $post['user_agent'];
+    $log->sender_ip = $post['ip_address'];
+    $log->sent_at = date('Y-m-d H:i:s');
+    $log->data = $post;
+    $log->save();
+
+    if( (isset($post['email']) and $post['email']) and (isset($post['name']) and $post['name']) and (isset($template['autoresponse']) and $template['autoresponse']) )
+    {
+        $response = [
+            'name' => $post['name'],
+            'email' => $post['email'],
+        ];
+        Mail::send('octodevel.octomail::emails.autoresponse', $post, function($autoresponse) use ($response)
         {
-            $message->from($data['sender_email'], $data['sender_name']);
-            $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
+            $autoresponse->to($response['email'], $response['name']);
         });
+    }
 
-        if($result)
-        {
-            $log = new RegisterLog;
-            $log->template_id = $template['id'];
-            $log->sender_agent = $post['user_agent'];
-            $log->sender_ip = $post['ip_address'];
-            $log->sent_at = date('Y-m-d H:i:s');
-            $log->data = $post;
-            $log->save();
+    $this->page["result"] = true;
+    $this->page["confirmation_text"] = $template['confirmation_text'];
 
-            if( (isset($post['email']) and $post['email']) and (isset($post['name']) and $post['name']) and (isset($template['autoresponse']) and $template['autoresponse']) )
-            {
-                Mail::send('octodevel.octomail::emails.autoresponse', $post, function($autoresponse) use ($data)
-                {
-                    $autoresponse->to($post['email'], $post['name']);
-                });
-            }
-        }
-
-        $this->page["result"] = (bool)$result;
-        $this->page["confirmation_text"] = $template['confirmation_text'];
-
-       if($redirectUrl)
+   if($redirectUrl)
            return Redirect::intended($redirectUrl);
     }
 
