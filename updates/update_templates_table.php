@@ -16,4 +16,9 @@ class UpdateTemplatesTable extends Migration
             });
         }
     }
+
+    public function down()
+    {
+        return true;
+    }
 }
