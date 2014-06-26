@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 use October\Rain\Support\ValidationException;
 use System\Models\EmailSettings;
+use System\Models\EmailTemplate;
 use OctoDevel\OctoMail\Models\Template as TemplateBase;
 use OctoDevel\OctoMail\Models\Log as RegisterLog;
 
@@ -56,6 +57,12 @@ class Template extends ComponentBase
                 'description' => 'Select the mail template',
                 'type'        => 'dropdown',
                 'default'     => ''
+            ],
+            'responseTemplate' => [
+                'title'       => 'Response template',
+                'description' => 'Select the response mail template',
+                'type'        => 'dropdown',
+                'default'     => 'octodevel.octomail::emails.autoresponse'
             ]
         ];
     }
@@ -65,6 +72,23 @@ class Template extends ComponentBase
         return array_merge([''=>'- none -'], CmsPropertyHelper::listPages());
     }
 
+    public function getResponseTemplateOptions()
+    {
+        $templates = EmailTemplate::all();
+        $result = array('' => '- none -');
+
+        if($templates)
+        {
+            foreach ($templates as $row)
+            {
+                $slug = explode('::', $row->code);
+                $result[$row->code] = $row->code;
+            }
+        }
+
+        return $result;
+    }
+
     public function getTemplateNameOptions()
     {
         $templates = DB::table($this->table)
@@ -72,122 +96,130 @@ class Template extends ComponentBase
                     ->groupBy('slug')
                     ->get();
 
-    $array_dropdown = [];
+        $array_dropdown = [];
 
-    foreach ($templates as $template)
-    {
-        $array_dropdown[$template->slug] = $template->title . ' [' . $this->langs[$template->lang] . ']';
-    }
+        foreach ($templates as $template)
+        {
+            $array_dropdown[$template->slug] = $template->title . ' [' . $this->langs[$template->lang] . ']';
+        }
 
         return array_merge([''=>''], $array_dropdown);
     }
 
-    public function onOctoMailSent(){
-
-    // Set the requested template in a variable;
-    $this->requestTemplate = $this->loadTemplate();
-    if(!$this->requestTemplate)
-        throw new \Exception(sprintf('A unexpected error has occurred. The template slug is invalid.'));
-
-    // Set a second variable with request data from database
-    $template = $this->requestTemplate->attributes;
-    if(!$template)
-        throw new \Exception(sprintf('A unexpected error has occurred. Erro while trying to get a non-object property.'));
-
-    // Set a global $_POST variable
-    $post = post();
-
-    // Unset problematic variables
-    if(isset($post['message']))
+    public function onOctoMailSent()
     {
-        // change message to body variable
-        $post['body'] = $post['message'];
-        unset($post['message']);
-    }
+        // Set the requested template in a variable;
+        $this->requestTemplate = $this->loadTemplate();
+        if(!$this->requestTemplate)
+            throw new \Exception(sprintf('A unexpected error has occurred. The template slug is invalid.'));
 
-    // Set redirect URL
-    $redirectUrl = $this->controller->pageUrl($this->property('redirectURL'));
+        // Set a second variable with request data from database
+        $template = $this->requestTemplate->attributes;
+        if(!$template)
+            throw new \Exception(sprintf('A unexpected error has occurred. Erro while trying to get a non-object property.'));
 
-    // Get request info
-    $request = Request::createFromGlobals();
+        // Set a global $_POST variable
+        $post = post();
 
-    // Set some request variables
-    $post['ip_address'] = $request->getClientIp();
-    $post['user_agent'] = $request->headers->get('User-Agent');
-    $post['sender_name'] = $template['sender_name'];
-    $post['sender_email'] = $template['sender_email'];
-    $post['recipient_name'] = $template['recipient_name'] ? $template['recipient_name'] : EmailSettings::get('sender_name');
-    $post['recipient_email'] = $template['recipient_email'] ? $template['recipient_email'] : EmailSettings::get('sender_email');
-    $post['default_subject'] = $template['subject'];
-
-    // Set some usable data
-    $data = [
-        'sender_name' => $template['sender_name'],
-        'sender_email' => $template['sender_email'],
-        'recipient_name' => $template['recipient_name'] ? $template['recipient_name'] : EmailSettings::get('sender_name'),
-        'recipient_email' => $template['recipient_email'] ? $template['recipient_email'] : EmailSettings::get('sender_email'),
-        'default_subject' => $template['subject']
-    ];
-
-    // Making custon validation
-    $fields = explode(',', preg_replace('/\s/', '', $template['fields']));
-
-    if($fields)
-    {
-        $validation_rules = [];
-        foreach ($fields as $field)
+        // Unset problematic variables
+        if(isset($post['message']))
         {
-            $rules = explode("|", $field);
-            if($rules)
-            {
-                $field_name = $rules[0];
-                $validation_rules[$field_name] = [];
-                unset($rules[0]);
+            // change message to body variable
+            $post['body'] = $post['message'];
+            unset($post['message']);
+        }
 
-                foreach ($rules as $key => $rule)
+        // Set redirect URL
+        $redirectUrl = $this->controller->pageUrl($this->property('redirectURL'));
+
+        // Get response email
+        $responseTemplate = $this->controller->pageUrl($this->property('responseTemplate'));
+        $autoresponseTemplate = EmailTemplate::get($responseTemplate);
+
+        // Get request info
+        $request = Request::createFromGlobals();
+
+        // Set some request variables
+        $post['ip_address'] = $request->getClientIp();
+        $post['user_agent'] = $request->headers->get('User-Agent');
+        $post['sender_name'] = $template['sender_name'];
+        $post['sender_email'] = $template['sender_email'];
+        $post['recipient_name'] = $template['recipient_name'] ? $template['recipient_name'] : EmailSettings::get('sender_name');
+        $post['recipient_email'] = $template['recipient_email'] ? $template['recipient_email'] : EmailSettings::get('sender_email');
+        $post['default_subject'] = $template['subject'];
+
+        // Set some usable data
+        $data = [
+            'sender_name' => $template['sender_name'],
+            'sender_email' => $template['sender_email'],
+            'recipient_name' => $template['recipient_name'] ? $template['recipient_name'] : EmailSettings::get('sender_name'),
+            'recipient_email' => $template['recipient_email'] ? $template['recipient_email'] : EmailSettings::get('sender_email'),
+            'default_subject' => $template['subject']
+        ];
+
+        // Making custon validation
+        $fields = explode(',', preg_replace('/\s/', '', $template['fields']));
+
+        if($fields)
+        {
+            $validation_rules = [];
+            foreach ($fields as $field)
+            {
+                $rules = explode("|", $field);
+                if($rules)
                 {
-                $validation_rules[$field_name][$key] = $rule;
+                    $field_name = $rules[0];
+                    $validation_rules[$field_name] = [];
+                    unset($rules[0]);
+
+                    foreach ($rules as $key => $rule)
+                    {
+                    $validation_rules[$field_name][$key] = $rule;
+                    }
                 }
             }
+            $this->rules = $validation_rules;
+
+            $validation = Validator::make($post, $this->rules);
+            if ($validation->fails())
+                throw new ValidationException($validation);
         }
-        $this->rules = $validation_rules;
 
-        $validation = Validator::make($post, $this->rules);
-        if ($validation->fails())
-            throw new ValidationException($validation);
-    }
-
-    Mail::send('octodevel.octomail::emails.view-' . $template['slug'], $post, function($message) use($data)
-    {
-        $message->from($data['sender_email'], $data['sender_name']);
-        $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
-    });
-
-    $log = new RegisterLog;
-    $log->template_id = $template['id'];
-    $log->sender_agent = $post['user_agent'];
-    $log->sender_ip = $post['ip_address'];
-    $log->sent_at = date('Y-m-d H:i:s');
-    $log->data = $post;
-    $log->save();
-
-    if( (isset($post['email']) and $post['email']) and (isset($post['name']) and $post['name']) and (isset($template['autoresponse']) and $template['autoresponse']) )
-    {
-        $response = [
-            'name' => $post['name'],
-            'email' => $post['email'],
-        ];
-        Mail::send('octodevel.octomail::emails.autoresponse', $post, function($autoresponse) use ($response)
+        Mail::send('octodevel.octomail::emails.view-' . $template['slug'], $post, function($message) use($data)
         {
-            $autoresponse->to($response['email'], $response['name']);
+            $message->from($data['sender_email'], $data['sender_name']);
+            $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
         });
-    }
 
-    $this->page["result"] = true;
-    $this->page["confirmation_text"] = $template['confirmation_text'];
+        $log = new RegisterLog;
+        $log->template_id = $template['id'];
+        $log->sender_agent = $post['user_agent'];
+        $log->sender_ip = $post['ip_address'];
+        $log->sent_at = date('Y-m-d H:i:s');
+        $log->data = $post;
+        $log->save();
 
-   if($redirectUrl)
-           return Redirect::intended($redirectUrl);
+        if( (isset($post['email']) and $post['email']) and (isset($post['name']) and $post['name']) and (isset($template['autoresponse']) and $template['autoresponse']) )
+        {
+            $response = [
+                'name' => $post['name'],
+                'email' => $post['email'],
+            ];
+
+            if($autoresponseTemplate)
+            {
+                Mail::send($responseTemplate, $post, function($autoresponse) use ($response)
+                {
+                    $autoresponse->to($response['email'], $response['name']);
+                });
+            }
+        }
+
+        $this->page["result"] = true;
+        $this->page["confirmation_text"] = $template['confirmation_text'];
+
+       if($redirectUrl)
+               return Redirect::intended($redirectUrl);
     }
 
     protected function loadTemplate()

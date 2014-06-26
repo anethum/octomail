@@ -20,3 +20,5 @@
     - Fixed trumbowyg image upload
 1.0.9:
     - Updated trumbowyg editor styles
+1.1.0:
+    - Enable you to choose your own response mail template
