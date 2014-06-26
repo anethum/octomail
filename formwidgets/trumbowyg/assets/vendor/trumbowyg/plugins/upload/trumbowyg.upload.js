@@ -87,10 +87,10 @@
                                     success: function(data){
 
                                         if(data.message == "uploadSuccess") {
-                                            
+
                                             data.file = data.file.substring(1).toLowerCase();
 
-                                            tbw.execCommand('insertImage', data.file);
+                                            tbw.execCommand('insertImage', window.location.href.toString().split(window.location.host)[0] + window.location.host.toString() + data.file);
                                             setTimeout(function(){
                                                 tbw.closeModal();
                                             }, 250);

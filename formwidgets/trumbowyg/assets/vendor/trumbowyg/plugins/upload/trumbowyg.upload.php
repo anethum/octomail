@@ -1,4 +1,4 @@
-<?php namespace Eein\Wysiwyg;
+<?php OctoDevel\OctoMail;
 /* ===========================================================
  * trumbowyg.upload.php
  * Upload plugin for Trumbowyg
@@ -17,7 +17,7 @@
 /**
  * Upload directory
  */
-define("UPLOADDIR", "../uploads/public/wysiwyg");
+define("UPLOADDIR", "../uploads/public/octodevel/octomail");
 
 
 

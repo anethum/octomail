@@ -4,3 +4,7 @@
 .form-group.fullwidth{
     width: 100%;
 }
+.trumbowyg-box, .editor {
+    width: 100%!important;
+    margin: 0px auto!important;
+}

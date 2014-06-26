@@ -17,18 +17,20 @@
     $(document).render(function () {
 
     	var slug;
-    	if($('#Form-form-field-Template-slug').val()){
-    		slug = $('#Form-form-field-Template-slug').val();
+    	if($('#Form-field-Template-slug').val()){
+    		slug = $('#Form-field-Template-slug').val();
     	}else{
     		slug = $('.nav.nav-tabs li.active:first a').attr('title');
     	}
 
     	$.extend(true, $.trumbowyg, {
                 upload: {
-		            serverPath: '/octodevel/octomail/upload/' + slug + '/'
+		            serverPath: window.location.href.toString().split(window.location.host)[0] +
+                                window.location.host.toString() +
+                                '/octodevel/octomail/upload/' + slug.toLowerCase() + '/'
 		        }
             });
-        $('[data-control="trumbowyg"] textarea').trumbowyg({        
+        $('[data-control="trumbowyg"] textarea').trumbowyg({
         		fixedBtnPane: true,
          		autogrow: true,
                 btnsDef: {

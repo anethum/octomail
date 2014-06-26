@@ -1,13 +1,19 @@
-subject = "Flavipias  :: {{ assunto }}"
+subject = "Contato de {{ nome }}"
 ==
-Olá Flavipias,
-Um usuário lhe enviou uma mensagem através do formulário de contato do website.
+Olá {{ sender_name }},
+Um usuário enviou-lhe uma mensagem no site.
 Nome: {{ nome }}
-E-mail: {{ email }}
-Telefone: {{ telefone }}Cidade: {{ cidade }}Estado: {{ estado }}Como nos conheceu: {{ como_nos_conheceu }}Mensagem: {{ mensagem }}
+Empresa: {{ empresa }}
+E-mail: {{ email }}Telefone: {{ telefone }}
+Data do Evento: {{ data_evento }}
+Local do Evento: {{ local_evento }}
+Mensagem: {{ mensagem }}
 ==
-<p>Olá Flavipias,</p>
-<p>Um usuário lhe enviou uma mensagem através do formulário de contato do website.</p>
+Olá {{ sender_name }},
+<br><br><p><span id="result_box" class="short_text" lang="pt"><span class="hps">Um usuário</span> <span class="hps">enviou</span><span class="">-lhe uma mensagem</span> <span class="hps">no site</span><span class="">.</span></span></p>
 Nome: {{ nome }}<br>
-E-mail: {{ email }}<br>
-Telefone: {{ telefone }}<br>Cidade: {{ cidade }}<br>Estado: {{ estado }}<br>Como nos conheceu: {{ como_nos_conheceu }}<br><p>Mensagem:</p> {{ mensagem }}
+Empresa: {{ empresa }}<br>
+E-mail: {{ email }}<br>Telefone: {{ telefone }}
+<br>Data do Evento: {{ data_evento }}
+<br>Local do Evento: {{ local_evento }}
+<br><p>Mensagem:</p> {{ mensagem }}

@@ -46,7 +46,7 @@ class Trumbowyg extends FormWidgetBase
     public function loadAssets()
     {
         $this->addCss('vendor/trumbowyg/design/css/trumbowyg.css');
-        $this->addCss('css/trumbowyg.css');
+        //$this->addCss('css/trumbowyg.css');
         $this->addJs('vendor/trumbowyg/trumbowyg.min.js');
         $this->addJs('vendor/trumbowyg/plugins/upload/trumbowyg.upload.js');
         $this->addJs('js/trumbowyg.js');
