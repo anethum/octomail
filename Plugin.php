@@ -10,7 +10,7 @@ class Plugin extends PluginBase
         return [
             'name' => 'Octo Mail',
             'description' => 'Create front-end contact forms that allow to send email messages based on custom templates.',
-            'author' => 'Octo Devel - Trumbowyg by Alex D - http://alex-d.fr/',
+            'author' => 'Octo Devel',
             'icon' => 'icon-envelope'
         ];
     }

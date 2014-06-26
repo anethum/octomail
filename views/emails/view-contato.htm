@@ -1,0 +1,19 @@
+subject = "Contato de {{ nome }}"
+==
+Olá {{ sender_name }},
+Um usuário enviou-lhe uma mensagem no site.
+Nome: {{ nome }}
+Empresa: {{ empresa }}
+E-mail: {{ email }}Telefone: {{ telefone }}
+Data do Evento: {{ data_evento }}
+Local do Evento: {{ local_evento }}
+Mensagem: {{ mensagem }}
+==
+Olá {{ sender_name }},
+<br><br><p><span id="result_box" class="short_text" lang="pt"><span class="hps">Um usuário</span> <span class="hps">enviou</span><span class="">-lhe uma mensagem</span> <span class="hps">no site</span><span class="">.</span></span></p>
+Nome: {{ nome }}<br>
+Empresa: {{ empresa }}<br>
+E-mail: {{ email }}<br>Telefone: {{ telefone }}
+<br>Data do Evento: {{ data_evento }}
+<br>Local do Evento: {{ local_evento }}
+<br><p>Mensagem:</p> {{ mensagem }}

@@ -22,3 +22,5 @@
     - Updated trumbowyg editor styles
 1.1.0:
     - Enable you to choose your own response mail template
+1.1.1:
+    - Fixed bug while save a new template
