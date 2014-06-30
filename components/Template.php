@@ -17,7 +17,7 @@ use OctoDevel\OctoMail\Models\Log as RegisterLog;
 class Template extends ComponentBase
 {
     public $table = 'octodevel_octomail_templates';
-    public $recipients = 'octodevel_octomail_templates_recipients';
+    public $recipients = 'octodevel_octomail_tem_rec';
     public $recipients_table = 'octodevel_octomail_recipients';
 
     public $requestTemplate;

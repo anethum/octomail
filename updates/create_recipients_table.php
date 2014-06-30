@@ -22,9 +22,9 @@ class CreateRecipientsTable extends Migration
         }
 
         // Install templates table
-        if ( !Schema::hasTable('octodevel_octomail_templates_recipients') )
+        if ( !Schema::hasTable('octodevel_octomail_tem_rec') )
         {
-            Schema::create('octodevel_octomail_templates_recipients', function($table)
+            Schema::create('octodevel_octomail_tem_rec', function($table)
             {
                 $table->engine = 'InnoDB';
                 $table->integer('template_id')->unsigned();
@@ -42,10 +42,10 @@ class CreateRecipientsTable extends Migration
             Schema::drop('octodevel_octomail_recipients');
         }
 
-        // Drop octodevel_octomail_templates_recipients table
-        if ( Schema::hasTable('octodevel_octomail_templates_recipients') )
+        // Drop octodevel_octomail_tem_rec table
+        if ( Schema::hasTable('octodevel_octomail_tem_rec') )
         {
-            Schema::drop('octodevel_octomail_templates_recipients');
+            Schema::drop('octodevel_octomail_tem_rec');
         }
     }
 

@@ -9,7 +9,7 @@ class Template extends Model
     public $table = 'octodevel_octomail_templates';
 
     public $belongsToMany = [
-        'recipents' => ['OctoDevel\OctoMail\Models\Recipient','table' => 'octodevel_octomail_templates_recipients']
+        'recipents' => ['OctoDevel\OctoMail\Models\Recipient','table' => 'octodevel_octomail_tem_rec']
     ];
 
     /*
