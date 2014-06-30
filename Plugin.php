@@ -39,6 +39,12 @@ class Plugin extends PluginBase
                         'url'         => Backend::url('octodevel/octomail/templates'),
                         'permissions' => ['octodevel.octomail.access_templates'],
                     ],
+                    'recipients' => [
+                        'label'       => 'Recipients',
+                        'icon'        => 'icon-envelope-o',
+                        'url'         => Backend::url('octodevel/octomail/recipients'),
+                        'permissions' => ['octodevel.octomail.access_recipients'],
+                    ],
                     'logs' => [
                         'label'       => 'Contact Logs',
                         'icon'        => 'icon-file-text-o',
@@ -76,6 +82,7 @@ class Plugin extends PluginBase
     {
         return [
             'octodevel.octomail.access_templates' => ['label' => 'OctoMail - Manage Templates', 'tab' => 'OctoDevel'],
+            'octodevel.octomail.access_recipients' => ['label' => 'OctoMail - Manage Recipients', 'tab' => 'OctoDevel'],
             'octodevel.octomail.access_logs' => ['label' => 'OctoMail - View Logs', 'tab' => 'OctoDevel']
         ];
     }

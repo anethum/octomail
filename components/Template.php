@@ -11,11 +11,15 @@ use October\Rain\Support\ValidationException;
 use System\Models\EmailSettings;
 use System\Models\EmailTemplate;
 use OctoDevel\OctoMail\Models\Template as TemplateBase;
+use OctoDevel\OctoMail\Models\Recipient as RecipientEmail;
 use OctoDevel\OctoMail\Models\Log as RegisterLog;
 
 class Template extends ComponentBase
 {
     public $table = 'octodevel_octomail_templates';
+    public $recipients = 'octodevel_octomail_templates_recipients';
+    public $recipients_table = 'octodevel_octomail_recipients';
+
     public $requestTemplate;
     public $langs = [
         ''=>'',
@@ -133,8 +137,7 @@ class Template extends ComponentBase
         $redirectUrl = $this->controller->pageUrl($this->property('redirectURL'));
 
         // Get response email
-        $responseTemplate = $this->controller->pageUrl($this->property('responseTemplate'));
-        $autoresponseTemplate = EmailTemplate::get($responseTemplate);
+        $responseMailTemplate = $this->property('responseTemplate');
 
         // Get request info
         $request = Request::createFromGlobals();
@@ -185,19 +188,52 @@ class Template extends ComponentBase
                 throw new ValidationException($validation);
         }
 
-        Mail::send('octodevel.octomail::emails.view-' . $template['slug'], $post, function($message) use($data)
-        {
-            $message->from($data['sender_email'], $data['sender_name']);
-            $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
-        });
+        // Get recipients
+        $recipients = DB::table($this->recipients)
+                    ->where('template_id', '=', $template['id'])
+                    ->leftJoin($this->recipients_table, $this->recipients_table . '.id', '=', $this->recipients . '.recipient_id')
+                    ->get();
 
-        $log = new RegisterLog;
-        $log->template_id = $template['id'];
-        $log->sender_agent = $post['user_agent'];
-        $log->sender_ip = $post['ip_address'];
-        $log->sent_at = date('Y-m-d H:i:s');
-        $log->data = $post;
-        $log->save();
+        if(!$template['multiple_recipients'])
+        {
+            Mail::send('octodevel.octomail::emails.view-' . $template['slug'], $post, function($message) use($data)
+            {
+                $message->from($data['sender_email'], $data['sender_name']);
+                $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
+            });
+
+            $log = new RegisterLog;
+            $log->template_id = $template['id'];
+            $log->sender_agent = $post['user_agent'];
+            $log->sender_ip = $post['ip_address'];
+            $log->sent_at = date('Y-m-d H:i:s');
+            $log->data = $post;
+            $log->save();
+
+        }
+        else
+        {
+            // Multiple emails
+            foreach($recipients as $recipient)
+            {
+                $data['recipient_name'] = $recipient->name;
+                $data['recipient_email'] = $recipient->email;
+
+                Mail::send('octodevel.octomail::emails.view-' . $template['slug'], $post, function($message) use($data)
+                {
+                    $message->from($data['sender_email'], $data['sender_name']);
+                    $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
+                });
+
+                $log = new RegisterLog;
+                $log->template_id = $template['id'];
+                $log->sender_agent = $post['user_agent'];
+                $log->sender_ip = $post['ip_address'];
+                $log->sent_at = date('Y-m-d H:i:s');
+                $log->data = $post;
+                $log->save();
+            }
+        }
 
         if( (isset($post['email']) and $post['email']) and (isset($post['name']) and $post['name']) and (isset($template['autoresponse']) and $template['autoresponse']) )
         {
@@ -206,9 +242,9 @@ class Template extends ComponentBase
                 'email' => $post['email'],
             ];
 
-            if($autoresponseTemplate)
+            if($responseMailTemplate)
             {
-                Mail::send($responseTemplate, $post, function($autoresponse) use ($response)
+                Mail::send($responseMailTemplate, $post, function($autoresponse) use ($response)
                 {
                     $autoresponse->to($response['email'], $response['name']);
                 });

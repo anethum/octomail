@@ -24,3 +24,7 @@
     - Enable you to choose your own response mail template
 1.1.1:
     - Fixed bug while save a new template
+1.1.2:
+    - Sending to multiple recipients implanted
+    - create_recipients_table.php
+    - implement_recipients.php

@@ -23,5 +23,6 @@ class Templates extends Controller
 
         BackendMenu::setContext('OctoDevel.OctoMail', 'octomail', 'templates');
         $this->addCss('/plugins/octodevel/octomail/assets/css/octodevel.octomail-form.css');
+        $this->addJs('/plugins/octodevel/octomail/assets/js/octodevel.octomail-form.js');
     }
 }

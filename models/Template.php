@@ -2,10 +2,15 @@
 
 use Model;
 use OctoDevel\OctoMail\Models\Files;
+use OctoDevel\OctoMail\Models\Recipient;
 
 class Template extends Model
 {
     public $table = 'octodevel_octomail_templates';
+
+    public $belongsToMany = [
+        'recipents' => ['OctoDevel\OctoMail\Models\Recipient','table' => 'octodevel_octomail_templates_recipients']
+    ];
 
     /*
      * Validation
@@ -19,6 +24,7 @@ class Template extends Model
         'subject' => 'required',
         'sender_name' => 'required',
         'sender_email' => ['required', 'email'],
+        'multiple_recipients' => '',
         'recipient_name' => '',
         'recipient_email' => 'email',
         'confirmation_text' => '',
