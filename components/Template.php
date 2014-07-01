@@ -1,10 +1,11 @@
 <?php namespace OctoDevel\OctoMail\Components;
 
+use App;
 use Mail;
 use Redirect;
 use Validator;
+use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
-use Cms\Classes\CmsPropertyHelper;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 use October\Rain\Support\ValidationException;
@@ -73,7 +74,8 @@ class Template extends ComponentBase
 
     public function getRedirectURLOptions()
     {
-        return array_merge([''=>'- none -'], CmsPropertyHelper::listPages());
+        $pages = Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
+        return array_merge([''=>'- none -'], $pages);
     }
 
     public function getResponseTemplateOptions()

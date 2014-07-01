@@ -35,3 +35,5 @@
     - create_tem_rec_table.php
 1.1.5:
     - Fixed bug empty select auto-response template
+1.1.6:
+    - Internal updates to mailTemplate component
