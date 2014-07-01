@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 use October\Rain\Support\ValidationException;
 use System\Models\EmailSettings;
-use System\Models\EmailTemplate;
+use \System\Models\EmailTemplate;
 use OctoDevel\OctoMail\Models\Template as TemplateBase;
 use OctoDevel\OctoMail\Models\Recipient as RecipientEmail;
 use OctoDevel\OctoMail\Models\Log as RegisterLog;
@@ -78,19 +78,10 @@ class Template extends ComponentBase
 
     public function getResponseTemplateOptions()
     {
-        $templates = EmailTemplate::all();
-        $result = array('' => '- none -');
+        $temp = new EmailTemplate();
+        $templates = $temp->listRegisteredTemplates();
 
-        if($templates)
-        {
-            foreach ($templates as $row)
-            {
-                $slug = explode('::', $row->code);
-                $result[$row->code] = $row->code;
-            }
-        }
-
-        return $result;
+        return array_merge(array('' => '- none -'), $templates);
     }
 
     public function getTemplateNameOptions()
