@@ -1,11 +1,10 @@
 <?php namespace OctoDevel\OctoMail\Components;
 
-use App;
 use Mail;
 use Redirect;
 use Validator;
-use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
+use Cms\Classes\CmsPropertyHelper;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 use October\Rain\Support\ValidationException;
@@ -21,6 +20,8 @@ class Template extends ComponentBase
     public $recipients = 'octodevel_octomail_tem_rec';
     public $recipients_table = 'octodevel_octomail_recipients';
 
+    public $aRName;
+    public $aREmail;
     public $requestTemplate;
     public $langs = [
         ''=>'',
@@ -59,23 +60,34 @@ class Template extends ComponentBase
             ],
             'templateName' => [
                 'title'       => 'Mail template',
-                'description' => 'Select the mail template',
+                'description' => 'Select the mail template.',
                 'type'        => 'dropdown',
                 'default'     => ''
             ],
             'responseTemplate' => [
                 'title'       => 'Response template',
-                'description' => 'Select the response mail template',
+                'description' => 'Select the response mail template.',
                 'type'        => 'dropdown',
                 'default'     => 'octodevel.octomail::emails.autoresponse'
+            ],
+            'responseFieldName' => [
+                'title'       => 'Response field name',
+                'description' => 'Set here your form field name that auto-response message will use as recipient.',
+                'type'        => 'string',
+                'default'     => 'name'
+            ],
+            'responseFieldEmail' => [
+                'title'       => 'Response field email',
+                'description' => 'Set here your form field email that auto-response message will use as recipient.',
+                'type'        => 'string',
+                'default'     => 'email'
             ]
         ];
     }
 
     public function getRedirectURLOptions()
     {
-        $pages = Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName');
-        return array_merge([''=>'- none -'], $pages);
+        return array_merge([''=>'- none -'], CmsPropertyHelper::listPages());
     }
 
     public function getResponseTemplateOptions()
@@ -113,7 +125,7 @@ class Template extends ComponentBase
         // Set a second variable with request data from database
         $template = $this->requestTemplate->attributes;
         if(!$template)
-            throw new \Exception(sprintf('A unexpected error has occurred. Erro while trying to get a non-object property.'));
+            throw new \Exception(sprintf('A unexpected error has occurred. Erro while trying to get a non-object propertyOrParam.'));
 
         // Set a global $_POST variable
         $post = post();
@@ -126,11 +138,17 @@ class Template extends ComponentBase
             unset($post['message']);
         }
 
+        // get name for auto-response message
+        $this->aRName = $this->propertyOrParam('responseFieldName');
+
+        // get email for auto-response message
+        $this->aREmail = $this->propertyOrParam('responseFieldEmail');
+
         // Set redirect URL
-        $redirectUrl = $this->controller->pageUrl($this->property('redirectURL'));
+        $redirectUrl = $this->controller->pageUrl($this->propertyOrParam('redirectURL'));
 
         // Get response email
-        $responseMailTemplate = $this->property('responseTemplate');
+        $responseMailTemplate = $this->propertyOrParam('responseTemplate');
 
         // Get request info
         $request = Request::createFromGlobals();
@@ -228,11 +246,11 @@ class Template extends ComponentBase
             }
         }
 
-        if( (isset($post['email']) and $post['email']) and (isset($post['name']) and $post['name']) and (isset($template['autoresponse']) and $template['autoresponse']) )
+        if( (isset($post[$this->aREmail]) and $post[$this->aREmail]) and (isset($post[$this->aRName]) and $post[$this->aRName]) and (isset($template['autoresponse']) and $template['autoresponse']) )
         {
             $response = [
-                'name' => $post['name'],
-                'email' => $post['email'],
+                'name' => $post[$this->aRName],
+                'email' => $post[$this->aREmail],
             ];
 
             if($responseMailTemplate)
@@ -253,7 +271,7 @@ class Template extends ComponentBase
 
     protected function loadTemplate()
     {
-        $slug = $this->property('templateName');
+        $slug = $this->propertyOrParam('templateName');
         return TemplateBase::getTemplate()->where('slug', '=', $slug)->first();
     }
 }
