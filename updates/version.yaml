@@ -37,3 +37,5 @@
     - Fixed bug empty select auto-response template
 1.1.6:
     - Added new fields in the mailTemplate component
+1.1.7:
+    - Duplicate and remove in lote were implanted

@@ -17,7 +17,7 @@ class Template extends Model
      * Validation
      */
     public $rules = [
-        'title' => 'required',
+        'title' => ['required', 'regex:/^[\' a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i'],
         'slug' => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i'],
         'lang' => 'required',
         'content_html' => 'required',
@@ -40,21 +40,81 @@ class Template extends Model
 
     protected $dates = ['created_at'];
 
+    public function beforeDuplicate()
+    {
+        // Update title
+        $title = explode(' ', $this->title);
+
+        $lastTitle = end($title);
+
+        if(is_numeric($lastTitle))
+        {
+            array_pop($title);
+        }
+
+        $title = implode(' ', $title) ? implode(' ', $title) : $this->title;
+
+        $getTitle = DB::table($this->table)->where('title', 'regexp', '^'. preg_quote($title) . '( [0-9]*$|$)')->orderBy(DB::raw('length(`title`)'), 'desc')->orderBy('title', 'desc')->first();
+
+        if($getTitle)
+        {
+            $DbTitle = explode(' ', $getTitle->title);
+
+            $lastDbTitle = array_pop($DbTitle);
+
+            if(!is_numeric($lastDbTitle))
+            {
+                $lastDbTitle = 0;
+            }
+        }
+        else
+        {
+            $lastDbTitle = 0;
+        }
+
+        $this->title = $title . ' ' . ++$lastDbTitle;
+
+        // Update slug
+        $slug = explode('-', $this->slug);
+
+        $lastSlug = end($slug);
+
+        if(is_numeric($lastSlug))
+        {
+            array_pop($slug);
+        }
+
+        $slug = implode('-', $slug) ? implode('-', $slug) : $this->slug;
+
+        $getSlug = DB::table($this->table)->where('slug', 'regexp', '^'. preg_quote($slug) . '(\\-[0-9]*$|$)')->orderBy(DB::raw('length(`slug`)'), 'desc')->orderBy('slug', 'desc')->first();
+
+        if($getSlug)
+        {
+            $DbSlug = explode('-', $getSlug->slug);
+
+            $lastDbSlug = array_pop($DbSlug);
+
+            if(!is_numeric($lastDbSlug))
+            {
+                $lastDbSlug = 0;
+            }
+        }
+        else
+        {
+            $lastDbSlug = 0;
+        }
+
+        $this->slug = $slug . '-' . ++$lastDbSlug;
+
+        // Update some fields
+        $this->created_at = date('Y-m-d H:i:s');
+        $this->updated_at = date('Y-m-d H:i:s');
+
+        return parent::save();
+    }
+
     public function beforeSave()
     {
-        $title = explode(' ', $this->title);
-        $last = array_pop($title);
-
-        if(is_numeric($last))
-        {
-            $count = count($title);
-        }
-
-        if(DB::table($this->table)->where('title', '=', $this->title)->count())
-        {
-            throw new \Exception(sprintf('Slug ja existe: ' . $last . ' - ' . $all));
-        }
-
         $this->filename = 'view-' . $this->slug . '.htm';
         $this->fields = preg_replace('/\s/', '', $this->fields);
         $this->content = strip_tags(preg_replace("/{{\s*message\s*}}/i", "{{ body }}", $this->content_html));

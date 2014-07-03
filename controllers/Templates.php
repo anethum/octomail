@@ -59,12 +59,11 @@ class Templates extends Controller
                 $data = $item->attributes;
 
                 if(!$data)
-                    throw new \Exception(sprintf('Item not found.'));
+                    throw new \Exception(sprintf('One or more items cannot be found.'));
 
                 // Insert data
-                $newItem = Template::find($itemId)->replicate()->save();
+                $newItem = Template::find($itemId)->replicate()->beforeDuplicate();
 
-                //throw new \Exception(sprintf(print_r($item, true)));
 
             }
 
@@ -72,17 +71,5 @@ class Templates extends Controller
         }
 
         return $this->listRefresh();
-/*
-        $ids = post('checked');
-
-        if($ids)
-        {
-            throw new \Exception(sprintf('Item selected'));
-        }
-        else
-        {
-            throw new \Exception(sprintf('No item selected'));
-        }
-*/
     }
 }
