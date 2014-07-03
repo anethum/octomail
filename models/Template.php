@@ -1,5 +1,6 @@
 <?php namespace OctoDevel\OctoMail\Models;
 
+use \DB;
 use Model;
 use OctoDevel\OctoMail\Models\Files;
 use OctoDevel\OctoMail\Models\Recipient;
@@ -17,7 +18,7 @@ class Template extends Model
      */
     public $rules = [
         'title' => 'required',
-        'slug' => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i', 'unique:octodevel_octomail_templates'],
+        'slug' => ['required', 'regex:/^[a-z0-9\/\:_\-\*\[\]\+\?\|]*$/i'],
         'lang' => 'required',
         'content_html' => 'required',
         'fields' => '',
@@ -41,6 +42,19 @@ class Template extends Model
 
     public function beforeSave()
     {
+        $title = explode(' ', $this->title);
+        $last = array_pop($title);
+
+        if(is_numeric($last))
+        {
+            $count = count($title);
+        }
+
+        if(DB::table($this->table)->where('title', '=', $this->title)->count())
+        {
+            throw new \Exception(sprintf('Slug ja existe: ' . $last . ' - ' . $all));
+        }
+
         $this->filename = 'view-' . $this->slug . '.htm';
         $this->fields = preg_replace('/\s/', '', $this->fields);
         $this->content = strip_tags(preg_replace("/{{\s*message\s*}}/i", "{{ body }}", $this->content_html));

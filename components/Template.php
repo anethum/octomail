@@ -3,13 +3,13 @@
 use Mail;
 use Redirect;
 use Validator;
+use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
-use Cms\Classes\CmsPropertyHelper;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 use October\Rain\Support\ValidationException;
 use System\Models\EmailSettings;
-use \System\Models\EmailTemplate;
+use System\Models\EmailTemplate;
 use OctoDevel\OctoMail\Models\Template as TemplateBase;
 use OctoDevel\OctoMail\Models\Recipient as RecipientEmail;
 use OctoDevel\OctoMail\Models\Log as RegisterLog;
@@ -62,7 +62,7 @@ class Template extends ComponentBase
                 'title'       => 'Mail template',
                 'description' => 'Select the mail template.',
                 'type'        => 'dropdown',
-                'default'     => ''
+                'default'     => 1
             ],
             'responseTemplate' => [
                 'title'       => 'Response template',
@@ -87,7 +87,7 @@ class Template extends ComponentBase
 
     public function getRedirectURLOptions()
     {
-        return array_merge([''=>'- none -'], CmsPropertyHelper::listPages());
+        return array_merge([''=>'- none -'], Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName'));
     }
 
     public function getResponseTemplateOptions()
@@ -109,7 +109,7 @@ class Template extends ComponentBase
 
         foreach ($templates as $template)
         {
-            $array_dropdown[$template->slug] = $template->title . ' [' . $this->langs[$template->lang] . ']';
+            $array_dropdown[$template->id] = $template->title . ' [' . $this->langs[$template->lang] . ']';
         }
 
         return array_merge([''=>''], $array_dropdown);
@@ -271,7 +271,13 @@ class Template extends ComponentBase
 
     protected function loadTemplate()
     {
-        $slug = $this->propertyOrParam('templateName');
-        return TemplateBase::getTemplate()->where('slug', '=', $slug)->first();
+        $id = $this->propertyOrParam('templateName');
+
+        if(is_numeric($id))
+        {
+            return TemplateBase::getTemplate()->where('id', '=', $id)->first();
+        }
+
+        return TemplateBase::getTemplate()->where('slug', '=', $id)->first();
     }
 }
