@@ -100,19 +100,16 @@ class Template extends ComponentBase
 
     public function getTemplateNameOptions()
     {
-        $templates = DB::table($this->table)
-                    ->orderBy('title','asc')
-                    ->groupBy('slug')
-                    ->get();
+        $templates = TemplateBase::all();
 
-        $array_dropdown = [];
+        $array_dropdown = ['' => ''];
 
         foreach ($templates as $template)
         {
             $array_dropdown[$template->id] = $template->title . ' [' . $this->langs[$template->lang] . ']';
         }
 
-        return array_merge([''=>''], $array_dropdown);
+        return $array_dropdown;
     }
 
     public function onOctoMailSent()

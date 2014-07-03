@@ -39,3 +39,5 @@
     - Added new fields in the mailTemplate component
 1.1.7:
     - Duplicate and remove in lote were implanted
+1.1.8:
+    - Fixed bug when select a template
