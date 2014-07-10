@@ -38,7 +38,9 @@ secondaryTabs:
     content_html:
       tab: Edit
       stretch: true
-      type: OctoDevel\OctoMail\FormWidgets\Trumbowyg
+      type: richeditor
+      size: giant
+      language: html
 
     fields:
        tab: Manage
