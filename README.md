@@ -1,15 +1,13 @@
-#OctoMail
+# OctoMail Plugin
 
-A powerful OctoberCMS plugin to create front-end contact forms that allow to send email messages based on custom templates.
+A powerful plugin to create front-end contact forms that allow to send email messages based on custom templates.
 
+## How do this work
 
-#How do this work
----
 An email template plugin for OctoberCMS to help easily embed a contact form or any HTML form what send email on any page of your website. It works using the AJAX Framework, so Javascript and jquery are required. Also, you must configure your email template in the admin area with a working smtp or other basic mail settings first. In other words, your server should be able to send emails for this plugin to work.
 
+### Creating an Email Template
 
-#Creating an Email Template
----
 1. Go to OctoMail on the main menus in your backend.
 
 2. Click on the Templates subsection.
@@ -34,12 +32,12 @@ An email template plugin for OctoberCMS to help easily embed a contact form or a
 
 10. 'Recipient Name' and 'Recipient Email' are optional, if you leave it blank, the plugin will assume the system 'Email Configuration' sender name and sender email as default recipient.
 
+### Usage
 
-#Usage
----
-After create a email template, you can use the html form in two ways:
+After create an email template, you can use the html form in two ways:
 
-###1. Using the component default markup or html
+### 1. Using the component default markup or html
+
 + The plugin should display a component on the components tab on the cms main menu.
 
 + You can include the component like any other component, no customization needed.
@@ -48,7 +46,7 @@ After create a email template, you can use the html form in two ways:
 
 **Page: HTML Form**
 
-```html
+```
 <form role="form"
       data-request="{{__SELF__}}::onOctoMailSent"
       data-request-update="'{{__SELF__}}::confirm': '.confirm-container'"
@@ -83,7 +81,7 @@ After create a email template, you can use the html form in two ways:
 
 **Partial: Confirm Result**
 
-```html
+```
 {% if result == true %}
     <h4>Email Sent successfully</h4>
     <p>
@@ -92,13 +90,14 @@ After create a email template, you can use the html form in two ways:
 {% endif %}
 ```
 
-###2. Using Custom markup or html
+
+### 2. Using Custom markup or html
 
 If you need to customize the markup for custom styling, donot embed the component as instructed above. Instead, embed the following html anywhere and remove the bootstrap specific classes and add your own. However, you must leave the (data-request, data-request-success and data-request-update) data-attributes intact as they are needed for the ajax to work. Refer to this [doc section](http://octobercms.com/docs/cms/ajax) to know what's happening here in detail.
 
 **Page: HTML Form**
 
-```html
+```
 <form role="form"
       data-request="onOctoMailSent"
       data-request-update="'confirm': '.confirm-container'"
@@ -128,9 +127,10 @@ If you need to customize the markup for custom styling, donot embed the componen
     </div>
 </form>
 ```
+
 **Partial: Confirm Result**
 
-```html
+```
 {% if result == true %}
     <h4>Email Sent successfully</h4>
     <p>
@@ -139,5 +139,5 @@ If you need to customize the markup for custom styling, donot embed the componen
 {% endif %}
 ```
 
-#**Note**
+### **Note**
 > Please note that the default markup provided by the form component relies on bootstrap and it's classes for styling. If you rely on it, you must make sure that bootstrap is loaded for it to be properly styled. I encourage you to style it using your own custom css to fit the overall style of your website.

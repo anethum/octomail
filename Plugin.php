@@ -59,10 +59,6 @@ class Plugin extends PluginBase
     public function registerFormWidgets()
     {
         return [
-            'OctoDevel\OctoMail\FormWidgets\Trumbowyg' => [
-                'label' => 'Trumbowyg',
-                'alias' => 'trumbowyg'
-            ],
             'OctoDevel\OctoMail\FormWidgets\JsonRender' => [
                 'label' => 'JsonRender',
                 'alias' => 'jsonrender'
