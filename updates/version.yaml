@@ -43,3 +43,5 @@
     - Fixed bug when select a template
 1.1.9:
     - Default cms richeditor implemented
+1.2.0:
+    - Fixed issue on richeditor

@@ -40,7 +40,6 @@ secondaryTabs:
       stretch: true
       type: richeditor
       size: giant
-      language: html
 
     fields:
        tab: Manage
