@@ -48,3 +48,5 @@
 1.2.1:
     - Fixed system email templates
     - fix_filename.php
+1.2.2:
+    - Fixed update issue

@@ -3,7 +3,7 @@
 use \DB;
 use Schema;
 use October\Rain\Database\Updates\Migration;
-use OctoDevel\OctoMail\Modeld\Template;
+use OctoDevel\OctoMail\Models\Template;
 
 class FixFilenames extends Migration
 {
