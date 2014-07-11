@@ -115,7 +115,7 @@ class Template extends Model
 
     public function beforeSave()
     {
-        $this->filename = 'view-' . $this->slug . '.htm';
+        $this->filename = $this->slug . '.htm';
         $this->fields = preg_replace('/\s/', '', $this->fields);
         $this->content = strip_tags(preg_replace("/{{\s*message\s*}}/i", "{{ body }}", $this->content_html));
         $this->content_html = preg_replace("/{{\s*message\s*}}/i", "{{ body }}", $this->content_html);

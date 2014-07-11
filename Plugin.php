@@ -83,10 +83,10 @@ class Plugin extends PluginBase
         ];
     }
 
-    public function registerEmailTemplates()
+    public function registerMailTemplates()
     {
         return [
-            'octodevel.octomail::emails.autoresponse' => 'Send a response email to user when send a message from Octo Mail.',
+            'octodevel.octomail::mail.autoresponse' => 'Send a response email to user when send a message from Octo Mail.',
         ];
     }
 }

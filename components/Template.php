@@ -92,6 +92,9 @@ class Template extends ComponentBase
 
     public function getResponseTemplateOptions()
     {
+        $template = EmailTemplate::all();
+        throw new \Exception(sprintf(print_r($template['attributes'], true)));;
+
         $temp = new EmailTemplate();
         $templates = $temp->listRegisteredTemplates();
 
@@ -204,7 +207,7 @@ class Template extends ComponentBase
 
         if(!$template['multiple_recipients'])
         {
-            Mail::send('octodevel.octomail::emails.view-' . $template['slug'], $post, function($message) use($data)
+            Mail::send('octodevel.octomail::mail.' . $template['slug'], $post, function($message) use($data)
             {
                 $message->from($data['sender_email'], $data['sender_name']);
                 $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
@@ -227,7 +230,7 @@ class Template extends ComponentBase
                 $data['recipient_name'] = $recipient->name;
                 $data['recipient_email'] = $recipient->email;
 
-                Mail::send('octodevel.octomail::emails.view-' . $template['slug'], $post, function($message) use($data)
+                Mail::send('octodevel.octomail::mail.' . $template['slug'], $post, function($message) use($data)
                 {
                     $message->from($data['sender_email'], $data['sender_name']);
                     $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
