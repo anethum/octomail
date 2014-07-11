@@ -1,11 +1,11 @@
 <?php namespace OctoDevel\OctoMail\Components;
 
+use \DB;
 use Mail;
 use Redirect;
 use Validator;
 use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
-use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Request;
 use October\Rain\Support\ValidationException;
 use System\Models\EmailSettings;
@@ -92,13 +92,17 @@ class Template extends ComponentBase
 
     public function getResponseTemplateOptions()
     {
-        $template = EmailTemplate::all();
-        throw new \Exception(sprintf(print_r($template['attributes'], true)));;
+        $system = DB::table('system_mail_templates')->get();
+        $templates = ['' => '- none -'];
 
-        $temp = new EmailTemplate();
-        $templates = $temp->listRegisteredTemplates();
+        if($system)
+        {
+            foreach ($system as $template) {
+                $templates[$template->code] = $template->description;
+            }
+        }
 
-        return array_merge(array('' => '- none -'), $templates);
+        return $templates;
     }
 
     public function getTemplateNameOptions()
