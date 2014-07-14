@@ -168,8 +168,8 @@ class Template extends ComponentBase
 
         // Set some usable data
         $data = [
-            'replyto_email' => $this->aRName,
-            'replyto_name' => $this->aREmail,
+            'replyto_email' => (isset($post[$this->aREmail]) ? $post['email'] : false),
+            'replyto_name' => (isset($post[$this->aRName]) ? $post['name'] : false),
             'sender_name' => $template['sender_name'],
             'sender_email' => $template['sender_email'],
             'recipient_name' => $template['recipient_name'] ? $template['recipient_name'] : EmailSettings::get('sender_name'),
@@ -217,7 +217,9 @@ class Template extends ComponentBase
             {
                 $message->from($data['sender_email'], $data['sender_name']);
                 $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
-                $message->replyTo($data['replyto_email'], $data['replyto_name']);
+
+                if($data['replyto_email'] and $data['replyto_name'])
+                    $message->replyTo($data['replyto_email'], $data['replyto_name']);
             });
 
             $log = new RegisterLog;
@@ -241,7 +243,9 @@ class Template extends ComponentBase
                 {
                     $message->from($data['sender_email'], $data['sender_name']);
                     $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
-                    $message->replyTo($data['email'], $data['name']);
+
+                    if($data['replyto_email'] and $data['replyto_name'])
+                        $message->replyTo($data['replyto_email'], $data['replyto_name']);
                 });
 
                 $log = new RegisterLog;
