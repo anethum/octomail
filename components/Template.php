@@ -8,8 +8,8 @@ use Cms\Classes\Page;
 use Cms\Classes\ComponentBase;
 use Symfony\Component\HttpFoundation\Request;
 use October\Rain\Support\ValidationException;
-use System\Models\EmailSettings;
-use System\Models\EmailTemplate;
+use System\Models\MailSettings;
+use System\Models\MailTemplate;
 use OctoDevel\OctoMail\Models\Template as TemplateBase;
 use OctoDevel\OctoMail\Models\Recipient as RecipientEmail;
 use OctoDevel\OctoMail\Models\Log as RegisterLog;
@@ -92,7 +92,7 @@ class Template extends ComponentBase
 
     public function getResponseTemplateOptions()
     {
-        $EmailTemplates = new EmailTemplate();
+        $EmailTemplates = new MailTemplate();
         $EmailTemplates->listRegisteredTemplates();
 
         $system = DB::table('system_mail_templates')->get();
@@ -165,8 +165,8 @@ class Template extends ComponentBase
         $post['user_agent'] = $request->headers->get('User-Agent');
         $post['sender_name'] = $template['sender_name'];
         $post['sender_email'] = $template['sender_email'];
-        $post['recipient_name'] = $template['recipient_name'] ? $template['recipient_name'] : EmailSettings::get('sender_name');
-        $post['recipient_email'] = $template['recipient_email'] ? $template['recipient_email'] : EmailSettings::get('sender_email');
+        $post['recipient_name'] = $template['recipient_name'] ? $template['recipient_name'] : MailSettings::get('sender_name');
+        $post['recipient_email'] = $template['recipient_email'] ? $template['recipient_email'] : MailSettings::get('sender_email');
         $post['default_subject'] = $template['subject'];
 
         // Set some usable data
@@ -175,8 +175,8 @@ class Template extends ComponentBase
             'replyto_name' => (isset($post[$this->aRName]) ? $post['name'] : false),
             'sender_name' => $template['sender_name'],
             'sender_email' => $template['sender_email'],
-            'recipient_name' => $template['recipient_name'] ? $template['recipient_name'] : EmailSettings::get('sender_name'),
-            'recipient_email' => $template['recipient_email'] ? $template['recipient_email'] : EmailSettings::get('sender_email'),
+            'recipient_name' => $template['recipient_name'] ? $template['recipient_name'] : MailSettings::get('sender_name'),
+            'recipient_email' => $template['recipient_email'] ? $template['recipient_email'] : MailSettings::get('sender_email'),
             'default_subject' => $template['subject']
         ];
 
