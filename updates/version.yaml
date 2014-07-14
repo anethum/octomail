@@ -58,3 +58,5 @@
     - Fixed issue
 1.2.6:
     - Update email templates before display auto-response template select
+1.2.7:
+    - Fixed issue while list auto-response template
