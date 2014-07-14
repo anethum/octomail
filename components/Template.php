@@ -37,14 +37,14 @@ class Template extends ComponentBase
     ];
 
     /*
-     * Validation
-     */
+* Validation
+*/
     public $rules = [];
 
     public function componentDetails()
     {
         return [
-            'name'        => 'Mail Template',
+            'name' => 'Mail Template',
             'description' => 'Displays a mail template to contact form where ever it\'s been embedded.'
         ];
     }
@@ -53,34 +53,34 @@ class Template extends ComponentBase
     {
         return [
             'redirectURL' => [
-                'title'       => 'Redirect to',
+                'title' => 'Redirect to',
                 'description' => 'Redirect to page after send email.',
-                'type'        => 'dropdown',
-                'default'     => ''
+                'type' => 'dropdown',
+                'default' => ''
             ],
             'templateName' => [
-                'title'       => 'Mail template',
+                'title' => 'Mail template',
                 'description' => 'Select the mail template.',
-                'type'        => 'dropdown',
-                'default'     => 1
+                'type' => 'dropdown',
+                'default' => 1
             ],
             'responseTemplate' => [
-                'title'       => 'Response template',
+                'title' => 'Response template',
                 'description' => 'Select the response mail template.',
-                'type'        => 'dropdown',
-                'default'     => 'octodevel.octomail::emails.autoresponse'
+                'type' => 'dropdown',
+                'default' => 'octodevel.octomail::emails.autoresponse'
             ],
             'responseFieldName' => [
-                'title'       => 'Response field name',
+                'title' => 'Response field name',
                 'description' => 'Set here your form field name that auto-response message will use as recipient.',
-                'type'        => 'string',
-                'default'     => 'name'
+                'type' => 'string',
+                'default' => 'name'
             ],
             'responseFieldEmail' => [
-                'title'       => 'Response field email',
+                'title' => 'Response field email',
                 'description' => 'Set here your form field email that auto-response message will use as recipient.',
-                'type'        => 'string',
-                'default'     => 'email'
+                'type' => 'string',
+                'default' => 'email'
             ]
         ];
     }
@@ -168,8 +168,8 @@ class Template extends ComponentBase
 
         // Set some usable data
         $data = [
-            'email'=>$post['email'],
-            'name'=>$post['name'],
+            'replyto_email' => $this->aRName,
+            'replyto_name' => $this->aREmail,
             'sender_name' => $template['sender_name'],
             'sender_email' => $template['sender_email'],
             'recipient_name' => $template['recipient_name'] ? $template['recipient_name'] : EmailSettings::get('sender_name'),
@@ -217,7 +217,7 @@ class Template extends ComponentBase
             {
                 $message->from($data['sender_email'], $data['sender_name']);
                 $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
-                $message->replyTo($data['email'], $data['name']);
+                $message->replyTo($data['replyto_email'], $data['replyto_name']);
             });
 
             $log = new RegisterLog;
