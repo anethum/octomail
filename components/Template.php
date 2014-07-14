@@ -168,6 +168,8 @@ class Template extends ComponentBase
 
         // Set some usable data
         $data = [
+            'email'=>$post['email'],
+            'name'=>$post['name'],
             'sender_name' => $template['sender_name'],
             'sender_email' => $template['sender_email'],
             'recipient_name' => $template['recipient_name'] ? $template['recipient_name'] : EmailSettings::get('sender_name'),
@@ -215,6 +217,7 @@ class Template extends ComponentBase
             {
                 $message->from($data['sender_email'], $data['sender_name']);
                 $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
+                $message->replyTo($data['email'], $data['name']);
             });
 
             $log = new RegisterLog;
@@ -238,6 +241,7 @@ class Template extends ComponentBase
                 {
                     $message->from($data['sender_email'], $data['sender_name']);
                     $message->to($data['recipient_email'], $data['recipient_name'])->subject($data['default_subject']);
+                    $message->replyTo($data['email'], $data['name']);
                 });
 
                 $log = new RegisterLog;
