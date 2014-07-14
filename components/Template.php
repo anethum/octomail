@@ -92,6 +92,8 @@ class Template extends ComponentBase
 
     public function getResponseTemplateOptions()
     {
+        EmailTemplate::syncAll();
+
         $system = DB::table('system_mail_templates')->get();
         $templates = ['' => '- none -'];
 
