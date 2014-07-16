@@ -16,6 +16,8 @@ use OctoDevel\OctoMail\Models\Log as RegisterLog;
 
 class Template extends ComponentBase
 {
+    use \October\Rain\Database\Traits\Validation;
+
     public $table = 'octodevel_octomail_templates';
     public $recipients = 'octodevel_octomail_tem_rec';
     public $recipients_table = 'octodevel_octomail_recipients';

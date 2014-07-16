@@ -62,3 +62,5 @@
     - Fixed issue while list auto-response template
 1.2.8:
     - Changed classes EmailSettings and EmailTemplate to the newer
+1.2.9:
+    - Fixed validation exceptions

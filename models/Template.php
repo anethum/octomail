@@ -7,6 +7,8 @@ use OctoDevel\OctoMail\Models\Recipient;
 
 class Template extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
+
     public $table = 'octodevel_octomail_templates';
 
     public $belongsToMany = [

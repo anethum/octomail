@@ -4,6 +4,8 @@ use Model;
 
 class Log extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
+
     public $table = 'octodevel_octomail_logs';
     /*
      * Relations

@@ -6,6 +6,8 @@ use OctoDevel\OctoMail\Models\Template;
 
 class Recipient extends Model
 {
+    use \October\Rain\Database\Traits\Validation;
+
     public $table = 'octodevel_octomail_recipients';
 
     /*
