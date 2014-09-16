@@ -70,7 +70,7 @@ class Template extends ComponentBase
                 'title' => 'Response template',
                 'description' => 'Select the response mail template.',
                 'type' => 'dropdown',
-                'default' => 'octodevel.octomail::emails.autoresponse'
+                'default' => 'octodevel.octomail::mail.autoresponse'
             ],
             'responseFieldName' => [
                 'title' => 'Response field name',
@@ -95,15 +95,14 @@ class Template extends ComponentBase
     public function getResponseTemplateOptions()
     {
         $EmailTemplates = new MailTemplate();
-        $EmailTemplates->listRegisteredTemplates();
+        $system = $EmailTemplates->listRegisteredTemplates();
 
-        $system = DB::table('system_mail_templates')->get();
         $templates = ['' => '- none -'];
 
         if($system)
         {
-            foreach ($system as $template) {
-                $templates[$template->code] = $template->description;
+            foreach ($system as $key => $value) {
+                $templates[$key] = $value;
             }
         }
 
