@@ -172,8 +172,8 @@ class Template extends ComponentBase
 
         // Set some usable data
         $data = [
-            'replyto_email' => (isset($post[$this->aREmail]) ? $post['email'] : false),
-            'replyto_name' => (isset($post[$this->aRName]) ? $post['name'] : false),
+            'replyto_email' => (isset($post[$this->aREmail]) ? $post[$this->aREmail] : false),
+            'replyto_name' => (isset($post[$this->aRName]) ? $post[$this->aRName] : false),
             'sender_name' => $template['sender_name'],
             'sender_email' => $template['sender_email'],
             'recipient_name' => $template['recipient_name'] ? $template['recipient_name'] : MailSettings::get('sender_name'),
