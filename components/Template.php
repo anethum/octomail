@@ -75,6 +75,13 @@ class Template extends ComponentBase
                 'default' => 'octodevel.octomail::mail.autoresponse',
                 'showExternalParameter' => false,
             ],
+            'bodyField' => [
+                'title' => 'Body field name',
+                'description' => 'Set here your form field that represents the user message. The nl2br will be applied before send.',
+                'type' => 'string',
+                'default' => 'body',
+                'showExternalParameter' => false,
+            ],
             'responseFieldName' => [
                 'title' => 'Response field name',
                 'description' => 'Set here your form field name that auto-response message will use as recipient.',
@@ -146,9 +153,19 @@ class Template extends ComponentBase
         // Unset problematic variables
         if(isset($post['message']))
         {
-            // change message to body variable
-            $post['body'] = $post['message'];
-            unset($post['message']);
+            throw new \Exception(sprintf('The field name "message" can\'t be used. Please modify the name of the field.'));
+        }
+
+        // get the message body
+        $this->bodyField = $this->property('bodyField');
+
+        if(isset($this->bodyField) && !empty($this->bodyField))
+        {
+            if(isset($post[$this->bodyField]))
+            {
+                $body = strip_tags($post[$this->bodyField]);
+                $post[$this->bodyField] = nl2br($body);
+            }
         }
 
         // get name for auto-response message

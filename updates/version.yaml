@@ -72,3 +72,5 @@
     - Fixed bug undefined index
 1.3.3:
     - Fixed previous bugs
+1.3.4:
+    - Function nl2br applied to body field
