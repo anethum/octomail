@@ -58,31 +58,36 @@ class Template extends ComponentBase
                 'title' => 'Redirect to',
                 'description' => 'Redirect to page after send email.',
                 'type' => 'dropdown',
-                'default' => ''
+                'default' => '',
+                'showExternalParameter' => false,
             ],
             'templateName' => [
                 'title' => 'Mail template',
                 'description' => 'Select the mail template.',
                 'type' => 'dropdown',
-                'default' => 1
+                'default' => 1,
+                'showExternalParameter' => false,
             ],
             'responseTemplate' => [
                 'title' => 'Response template',
                 'description' => 'Select the response mail template.',
                 'type' => 'dropdown',
-                'default' => 'octodevel.octomail::mail.autoresponse'
+                'default' => 'octodevel.octomail::mail.autoresponse',
+                'showExternalParameter' => false,
             ],
             'responseFieldName' => [
                 'title' => 'Response field name',
                 'description' => 'Set here your form field name that auto-response message will use as recipient.',
                 'type' => 'string',
-                'default' => 'name'
+                'default' => 'name',
+                'showExternalParameter' => false,
             ],
             'responseFieldEmail' => [
                 'title' => 'Response field email',
                 'description' => 'Set here your form field email that auto-response message will use as recipient.',
                 'type' => 'string',
-                'default' => 'email'
+                'default' => 'email',
+                'showExternalParameter' => false,
             ]
         ];
     }
@@ -133,7 +138,7 @@ class Template extends ComponentBase
         // Set a second variable with request data from database
         $template = $this->requestTemplate->attributes;
         if(!$template)
-            throw new \Exception(sprintf('A unexpected error has occurred. Erro while trying to get a non-object propertyOrParam.'));
+            throw new \Exception(sprintf('A unexpected error has occurred. Erro while trying to get a non-object property.'));
 
         // Set a global $_POST variable
         $post = post();
@@ -147,16 +152,16 @@ class Template extends ComponentBase
         }
 
         // get name for auto-response message
-        $this->aRName = $this->propertyOrParam('responseFieldName');
+        $this->aRName = $this->property('responseFieldName');
 
         // get email for auto-response message
-        $this->aREmail = $this->propertyOrParam('responseFieldEmail');
+        $this->aREmail = $this->property('responseFieldEmail');
 
         // Set redirect URL
-        $redirectUrl = $this->controller->pageUrl($this->propertyOrParam('redirectURL'));
+        $redirectUrl = $this->controller->pageUrl($this->property('redirectURL'));
 
         // Get response email
-        $responseMailTemplate = $this->propertyOrParam('responseTemplate');
+        $responseMailTemplate = $this->property('responseTemplate');
 
         // Get request info
         $request = Request::createFromGlobals();
@@ -287,7 +292,7 @@ class Template extends ComponentBase
 
     protected function loadTemplate()
     {
-        $id = $this->propertyOrParam('templateName');
+        $id = $this->property('templateName');
 
         if(is_numeric($id))
         {
