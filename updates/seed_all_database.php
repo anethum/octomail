@@ -24,13 +24,13 @@ class SeedAllTables extends Seeder
 	    . "Name: {{ name }}\r\n"
 	    . "Email: {{ email }}\r\n"
 	    . "Phone: {{ phone }}\r\n"
-	    . "Message: \r\n\n{{ body }}\r\n",
+	    . "Message: \r\n\n{{ body|raw }}\r\n",
 	    'content_html' => "<p>Hello {{ sender_name }},</p>\r\n"
 	    . "<p>An user sent you a message from website.</p>\r\n"
 	    . "Name: {{ name }}<br />\r\n"
 	    . "Email: {{ email }}<br />\r\n"
 	    . "Phone: {{ phone }}\r\n"
-	    . "<p>Message:</p> {{ body }}\r\n",
+	    . "<p>Message:</p> {{ body|raw }}\r\n",
 	    'fields' => 'name|required,email|required|email,phone,body|required',
 	    'sender_name' => 'Your Name',
 	    'sender_email' => 'youremail@yourwebsite.com',
