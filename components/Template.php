@@ -153,7 +153,7 @@ class Template extends ComponentBase
         // Unset problematic variables
         if(isset($post['message']))
         {
-            throw new \Exception(sprintf('The field name "message" can\'t be used. Please modify the name of the field.'));
+            throw new \Exception(sprintf('The field name "message" can\'t be used. Please, check documentation notes for more information.'));
         }
 
         // get the message body
