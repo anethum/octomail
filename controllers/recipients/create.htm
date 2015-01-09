@@ -1,7 +1,7 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('octodevel/octomail/recipients') ?>">Octo Mail Recipients</a></li>
-        <li><?= e($this->pageTitle) ?></li>
+        <li><a href="<?= Backend::url('octodevel/octomail/recipients') ?>"><?= e(trans('octodevel.octomail::lang.controllers.recipients.title')) ?></a></li>
+        <li><?= e(trans($this->pageTitle)) ?></li>
     </ul>
 <?php Block::endPut() ?>
 
@@ -18,27 +18,28 @@
                     data-request="onSave"
                     data-hotkey="ctrl+s"
                     data-hotkey-mac="cmd+s"
-                    data-load-indicator="Creating Recipient..."
+                    data-load-indicator="<?= e(trans('backend::lang.form.saving')) ?>"
                     class="btn btn-primary">
-                    Create
+                    <?= e(trans('backend::lang.form.create')) ?>
                 </button>
                 <button
                     type="button"
                     data-request="onSave"
                     data-request-data="close:1"
-                    data-hotkey="ctrl+enter"
-                    data-hotkey-mac="cmd+enter"
-                    data-load-indicator="Creating Recipient..."
+                    data-hotkey="ctrl+enter, cmd+enter"
+                    data-load-indicator="<?= e(trans('backend::lang.form.saving')) ?>"
                     class="btn btn-default">
-                    Create and Close
+                    <?= e(trans('backend::lang.form.create_and_close')) ?>
                 </button>
-                <span class="btn-text">or <a href="<?= Backend::url('octodevel/octomail/recipients') ?>">Cancel</a></span>
+                <span class="btn-text">
+                    <?= e(trans('backend::lang.form.or')) ?> <a href="<?= Backend::url('octodevel/octomail/recipients') ?>"><?= e(trans('backend::lang.form.cancel')) ?></a>
+                </span>
             </div>
         </div>
 
     <?= Form::close() ?>
 
 <?php else: ?>
-    <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-    <p><a href="<?= Backend::url('octodevel/octomail/posts') ?>" class="btn btn-default">Return to the octomail recipient list</a></p>
+    <p class="flash-message static error"><?= e(trans($this->fatalError)) ?></p>
+    <p><a href="<?= Backend::url('octodevel/octomail/recipients ') ?>" class="btn btn-default"><?= e(trans('octodevel.octomail::lang.controllers.default.return_to_items')) ?></a></p>
 <?php endif ?>

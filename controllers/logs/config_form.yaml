@@ -2,7 +2,7 @@
 #  Form Behavior Config
 # ===================================
 
-name: Contact Log
+name: octodevel.octomail::lang.controllers.logs.config_form.name
 form: @/plugins/octodevel/octomail/models/log/fields.yaml
 modelClass: OctoDevel\OctoMail\Models\Log
 defaultRedirect: octodevel/octomail/logs

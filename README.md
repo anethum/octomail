@@ -40,7 +40,7 @@ After create an email template, you can use the html form in two ways:
 
 + The plugin should display a component on the components tab on the cms main menu.
 
-+ You can include the component like any other component. The settings are
++ You can include the component like any other component, no customization needed.
 
 + The component has a default markup as shown below and depends on bootstrap.
 
@@ -140,5 +140,4 @@ If you need to customize the markup for custom styling, donot embed the componen
 ```
 
 ### **Note**
-> Please, note that the default markup provided by the form component relies on bootstrap and it's classes for styling. If you rely on it, you must make sure that bootstrap is loaded for it to be properly styled. I encourage you to style it using your own custom css to fit the overall style of your website.
-> Please, don't use any HTML field named as *message* e.g: <textarea name="message"></textarea>. Laravel email class pass a variable *$message* every time when it's called, so it conflict with the posted field named as *message*.
+> Please note that the default markup provided by the form component relies on bootstrap and it's classes for styling. If you rely on it, you must make sure that bootstrap is loaded for it to be properly styled. I encourage you to style it using your own custom css to fit the overall style of your website.

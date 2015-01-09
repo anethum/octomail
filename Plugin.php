@@ -1,6 +1,7 @@
 <?php namespace OctoDevel\OctoMail;
 
 use Backend;
+use \Lang;
 use System\Classes\PluginBase;
 
 class Plugin extends PluginBase
@@ -8,10 +9,10 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name' => 'Octo Mail',
-            'description' => 'Create front-end contact forms that allow to send email messages based on custom templates.',
-            'author' => 'Octo Devel',
-            'icon' => 'icon-envelope'
+            'name' => Lang::get('octodevel.octomail::lang.app.name'),
+            'description' => Lang::get('octodevel.octomail::lang.app.description'),
+            'author' => Lang::get('octodevel.octomail::lang.app.author'),
+            'icon' => Lang::get('octodevel.octomail::lang.app.icon')
         ];
     }
 
@@ -26,7 +27,7 @@ class Plugin extends PluginBase
     {
         return [
             'octomail' => [
-                'label'       => 'Octo Mail',
+                'label'       => Lang::get('octodevel.octomail::lang.app.name'),
                 'url'         => Backend::url('octodevel/octomail/templates'),
                 'icon'        => 'icon-envelope',
                 'permissions' => ['octodevel.octomail.*'],
@@ -34,19 +35,19 @@ class Plugin extends PluginBase
 
                 'sideMenu' => [
                     'templates' => [
-                        'label'       => 'Templates',
+                        'label'       => Lang::get('octodevel.octomail::lang.navigation.templates'),
                         'icon'        => 'icon-list-alt',
                         'url'         => Backend::url('octodevel/octomail/templates'),
                         'permissions' => ['octodevel.octomail.access_templates'],
                     ],
                     'recipients' => [
-                        'label'       => 'Recipients',
+                        'label'       => Lang::get('octodevel.octomail::lang.navigation.recipients'),
                         'icon'        => 'icon-envelope-o',
                         'url'         => Backend::url('octodevel/octomail/recipients'),
                         'permissions' => ['octodevel.octomail.access_recipients'],
                     ],
                     'logs' => [
-                        'label'       => 'Contact Logs',
+                        'label'       => Lang::get('octodevel.octomail::lang.navigation.contact_logs'),
                         'icon'        => 'icon-file-text-o',
                         'url'         => Backend::url('octodevel/octomail/logs'),
                         'permissions' => ['octodevel.octomail.access_logs'],
@@ -77,16 +78,16 @@ class Plugin extends PluginBase
     public function registerPermissions()
     {
         return [
-            'octodevel.octomail.access_templates' => ['label' => 'OctoMail - Manage Templates', 'tab' => 'OctoDevel'],
-            'octodevel.octomail.access_recipients' => ['label' => 'OctoMail - Manage Recipients', 'tab' => 'OctoDevel'],
-            'octodevel.octomail.access_logs' => ['label' => 'OctoMail - View Logs', 'tab' => 'OctoDevel']
+            'octodevel.octomail.access_templates' => ['label' => Lang::get('octodevel.octomail::lang.permissions.access_templates'), 'tab' => 'OctoDevel'],
+            'octodevel.octomail.access_recipients' => ['label' => Lang::get('octodevel.octomail::lang.permissions.access_recipients'), 'tab' => 'OctoDevel'],
+            'octodevel.octomail.access_logs' => ['label' => Lang::get('octodevel.octomail::lang.permissions.access_logs'), 'tab' => 'OctoDevel']
         ];
     }
 
     public function registerMailTemplates()
     {
         return [
-            'octodevel.octomail::mail.autoresponse' => 'Send a response email to user when send a message from Octo Mail.',
+            'octodevel.octomail::mail.autoresponse' => Lang::get('octodevel.octomail::lang.mailTemplates.autoresponse'),
         ];
     }
 }

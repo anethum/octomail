@@ -9,7 +9,7 @@ list: @/plugins/octodevel/octomail/models/template/columns.yaml
 modelClass: OctoDevel\OctoMail\Models\Template
 
 # List Title
-title: Manage Email Templates
+title: octodevel.octomail::lang.controllers.templates.config_list.title
 
 # Link URL for each record
 recordUrl: octodevel/octomail/templates/update/:id

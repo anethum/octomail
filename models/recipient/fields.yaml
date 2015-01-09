@@ -5,9 +5,9 @@
 fields:
 
   name:
-    label: Name
+    label: octodevel.octomail::lang.models.recipient.fields.label.name
     span: left
 
   email:
-    label: Email
+    label: octodevel.octomail::lang.models.recipient.fields.label.email
     span: right

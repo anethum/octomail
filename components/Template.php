@@ -2,6 +2,7 @@
 
 use \DB;
 use Mail;
+use \Lang;
 use Redirect;
 use Validator;
 use Cms\Classes\Page;
@@ -26,7 +27,7 @@ class Template extends ComponentBase
     public $aREmail;
     public $requestTemplate;
     public $langs = [
-        ''=>'',
+        ''   => '',
         'nl' => 'Dutch',
         'en' => 'English',
         'de' => 'German',
@@ -46,8 +47,8 @@ class Template extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name' => 'Mail Template',
-            'description' => 'Displays a mail template to contact form where ever it\'s been embedded.'
+            'name' => 'octodevel.octomail::lang.components.mailTemplate.name',
+            'description' => 'octodevel.octomail::lang.components.mailTemplate.description'
         ];
     }
 
@@ -55,53 +56,53 @@ class Template extends ComponentBase
     {
         return [
             'redirectURL' => [
-                'title' => 'Redirect to',
-                'description' => 'Redirect to page after send email.',
+                'title' => 'octodevel.octomail::lang.components.mailTemplate.properties.redirectURL.title',
+                'description' => 'octodevel.octomail::lang.components.mailTemplate.properties.redirectURL.description',
                 'type' => 'dropdown',
                 'default' => '',
-                'showExternalParameter' => false,
+                'showExternalParam' => false,
             ],
             'templateName' => [
-                'title' => 'Mail template',
-                'description' => 'Select the mail template.',
+                'title' => 'octodevel.octomail::lang.components.mailTemplate.properties.templateName.title',
+                'description' => 'octodevel.octomail::lang.components.mailTemplate.properties.templateName.description',
                 'type' => 'dropdown',
                 'default' => 1,
-                'showExternalParameter' => false,
+                'showExternalParam' => false,
             ],
             'responseTemplate' => [
-                'title' => 'Response template',
-                'description' => 'Select the response mail template.',
+                'title' => 'octodevel.octomail::lang.components.mailTemplate.properties.responseTemplate.title',
+                'description' => 'octodevel.octomail::lang.components.mailTemplate.properties.responseTemplate.description',
                 'type' => 'dropdown',
                 'default' => 'octodevel.octomail::mail.autoresponse',
-                'showExternalParameter' => false,
+                'showExternalParam' => false,
             ],
             'bodyField' => [
-                'title' => 'Body field name',
-                'description' => 'Set here your form field that represents the user message. The nl2br will be applied before send.',
+                'title' => 'octodevel.octomail::lang.components.mailTemplate.properties.bodyField.title',
+                'description' => 'octodevel.octomail::lang.components.mailTemplate.properties.bodyField.description',
                 'type' => 'string',
                 'default' => 'body',
-                'showExternalParameter' => false,
+                'showExternalParam' => false,
             ],
             'responseFieldName' => [
-                'title' => 'Response field name',
-                'description' => 'Set here your form field name that auto-response message will use as recipient.',
+                'title' => 'octodevel.octomail::lang.components.mailTemplate.properties.responseFieldName.title',
+                'description' => 'octodevel.octomail::lang.components.mailTemplate.properties.responseFieldName.description',
                 'type' => 'string',
                 'default' => 'name',
-                'showExternalParameter' => false,
+                'showExternalParam' => false,
             ],
             'responseFieldEmail' => [
-                'title' => 'Response field email',
-                'description' => 'Set here your form field email that auto-response message will use as recipient.',
+                'title' => 'octodevel.octomail::lang.components.mailTemplate.properties.responseFieldEmail.title',
+                'description' => 'octodevel.octomail::lang.components.mailTemplate.properties.responseFieldEmail.description',
                 'type' => 'string',
                 'default' => 'email',
-                'showExternalParameter' => false,
+                'showExternalParam' => false,
             ]
         ];
     }
 
     public function getRedirectURLOptions()
     {
-        return array_merge([''=>'- none -'], Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName'));
+        return array_merge(['' => Lang::get('octodevel.octomail::lang.components.mailTemplate.default.options.none')], Page::sortBy('baseFileName')->lists('baseFileName', 'baseFileName'));
     }
 
     public function getResponseTemplateOptions()
@@ -109,7 +110,7 @@ class Template extends ComponentBase
         $EmailTemplates = new MailTemplate();
         $system = $EmailTemplates->listRegisteredTemplates();
 
-        $templates = ['' => '- none -'];
+        $templates = ['' => Lang::get('octodevel.octomail::lang.components.mailTemplate.default.options.none')];
 
         if($system)
         {
@@ -140,12 +141,12 @@ class Template extends ComponentBase
         // Set the requested template in a variable;
         $this->requestTemplate = $this->loadTemplate();
         if(!$this->requestTemplate)
-            throw new \Exception(sprintf('A unexpected error has occurred. The template slug is invalid.'));
+            throw new \Exception(sprintf(Lang::get('octodevel.octomail::lang.components.mailTemplate.functions.onOctoMailSent.exceptions.invalid_template')));
 
         // Set a second variable with request data from database
         $template = $this->requestTemplate->attributes;
         if(!$template)
-            throw new \Exception(sprintf('A unexpected error has occurred. Erro while trying to get a non-object property.'));
+            throw new \Exception(sprintf(Lang::get('octodevel.octomail::lang.components.mailTemplate.functions.onOctoMailSent.exceptions.invalid_attributes')));
 
         // Set a global $_POST variable
         $post = post();
@@ -153,7 +154,7 @@ class Template extends ComponentBase
         // Unset problematic variables
         if(isset($post['message']))
         {
-            throw new \Exception(sprintf('The field name "message" can\'t be used. Please, check documentation notes for more information.'));
+            throw new \Exception(sprintf(Lang::get('octodevel.octomail::lang.components.mailTemplate.functions.onOctoMailSent.exceptions.invalid_message_field')));
         }
 
         // get the message body
@@ -255,7 +256,6 @@ class Template extends ComponentBase
             $log->sent_at = date('Y-m-d H:i:s');
             $log->data = $post;
             $log->save();
-
         }
         else
         {

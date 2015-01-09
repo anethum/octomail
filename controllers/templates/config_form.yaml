@@ -2,7 +2,7 @@
 #  Form Behavior Config
 # ===================================
 
-name: Email Templates
+name: octodevel.octomail::lang.controllers.templates.config_form.name
 form: @/plugins/octodevel/octomail/models/template/fields.yaml
 modelClass: OctoDevel\OctoMail\Models\Template
 defaultRedirect: octodevel/octomail/templates

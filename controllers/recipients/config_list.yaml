@@ -9,7 +9,7 @@ list: @/plugins/octodevel/octomail/models/recipient/columns.yaml
 modelClass: OctoDevel\OctoMail\Models\Recipient
 
 # List Title
-title: Manage Blog Categories
+title: octodevel.octomail::lang.controllers.recipients.config_list.title
 
 # Link URL for each record
 recordUrl: octodevel/octomail/recipients/update/:id

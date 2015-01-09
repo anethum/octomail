@@ -5,20 +5,20 @@
 columns:
 
   template_id:
-    label: Template
+    label: octodevel.octomail::lang.models.log.columns.template_id
     relation: template
     select: @title
     searchable: true
 
   sender_ip:
-    label: IP
+    label: octodevel.octomail::lang.models.log.columns.sender_ip
     searchable: true
 
   sent_at:
-    label: Sent At
+    label: octodevel.octomail::lang.models.log.columns.sent_at
     type: datetime
     searchable: true
 
   sender_agent:
-    label: User Agent
+    label: octodevel.octomail::lang.models.log.columns.sender_agent
     searchable: true

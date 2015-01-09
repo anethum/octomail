@@ -5,21 +5,21 @@
 columns:
 
   title:
-    label: Title
+    label: octodevel.octomail::lang.models.templates.columns.title
     searchable: true
 
   slug:
-    label: Slug
+    label: octodevel.octomail::lang.models.templates.columns.slug
     searchable: true
-    
+
   lang:
-    label: Lang
+    label: octodevel.octomail::lang.models.templates.columns.lang
     searchable: false
-    
+
   created_at:
-    label: Created
+    label: octodevel.octomail::lang.models.templates.columns.created_at
     type: date
 
   updated_at:
-    label: Updated
+    label: octodevel.octomail::lang.models.templates.columns.updated_at
     type: date
