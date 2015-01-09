@@ -3,7 +3,7 @@
 return [
     // Plugin definitions
     'app' => [
-        'name' => 'Octo Mail',
+        'name' => 'Mail',
         'description' => 'Create front-end contact forms that allow to send email messages based on custom templates.',
         'author' => 'Octo Devel',
         'icon' => 'icon-envelope'
@@ -133,10 +133,19 @@ return [
             'config_form' => ['name' => 'Email Template'],
             'config_list' => ['title' => 'Manage Email Templates'],
             'preview' => ['menu_label' => 'Email templates'],
+            'functions' => [
+                'index_onDelete' => [
+                    'success' => 'Successfully deleted those selected.',
+                ],
+                'index_onDuplicate' => [
+                    'no_data_error' => 'One or more items cannot be found.',
+                    'success' => 'Successfully duplicate those selected.',
+                ],
+            ],
         ],
         // recipients controller
         'recipients' => [
-            'title' => 'Octo Mail Recipients',
+            'title' => 'Recipients',
             '_list_toolbar' => ['new' => 'New Recipient'],
             'config_form' => ['name' => 'Email Recipient'],
             'config_list' => ['title' => 'Manage Email Recipients'],

@@ -3,7 +3,7 @@
 return [
     // Plugin definitions
     'app' => [
-        'name' => 'Octo Mail',
+        'name' => 'Mail',
         'description' => 'Crie formulários de contato front-end que permitem enviar mensagens de e-mail baseado em modelos personalizados.',
         'author' => 'Octo Devel',
         'icon' => 'icon-envelope'
@@ -19,7 +19,7 @@ return [
         'access_logs' => 'OctoMail - Visualizar Logs',
     ],
     'mailTemplates' => [
-        'autoresponse' => 'Enviar um e-mail de resposta para o usuário quando ele enviar uma mensagem do Octo Mail.',
+        'autoresponse' => 'Enviar um e-mail de resposta para o usuário quando ele enviar uma mensagem do Mail.',
     ],
 
     // Models Definitions
@@ -133,10 +133,19 @@ return [
             'config_form' => ['name' => 'Modelo de E-mail'],
             'config_list' => ['title' => 'Gerenciar Modelos de E-mail'],
             'preview' => ['menu_label' => 'Modelos de E-mail'],
+            'functions' => [
+                'index_onDelete' => [
+                    'success' => 'Os itens selecionados foram removidos com sucesso.',
+                ],
+                'index_onDuplicate' => [
+                    'no_data_error' => 'Um ou mais itens não foram encontrados.',
+                    'success' => 'Os itens selecionados foram duplicados com sucesso.',
+                ],
+            ],
         ],
         // recipients controller
         'recipients' => [
-            'title' => 'Destinatários Octo Mail',
+            'title' => 'Destinatários',
             '_list_toolbar' => ['new' => 'Novo Destinatário'],
             'config_form' => ['name' => 'E-mail Destinatário'],
             'config_list' => ['title' => 'Gerenciar E-mails Destinatários'],

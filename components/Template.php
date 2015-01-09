@@ -40,8 +40,8 @@ class Template extends ComponentBase
     ];
 
     /*
-* Validation
-*/
+    * Validation
+    */
     public $rules = [];
 
     public function componentDetails()
@@ -221,13 +221,13 @@ class Template extends ComponentBase
 
                     foreach ($rules as $key => $rule)
                     {
-                    $validation_rules[$field_name][$key] = $rule;
+                        $validation_rules[$field_name][$key] = $rule;
                     }
                 }
             }
             $this->rules = $validation_rules;
-
             $validation = Validator::make($post, $this->rules);
+
             if ($validation->fails())
                 throw new ValidationException($validation);
         }

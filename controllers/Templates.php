@@ -1,6 +1,7 @@
 <?php namespace OctoDevel\OctoMail\Controllers;
 
 use Flash;
+use \Lang;
 use BackendMenu;
 use Backend\Classes\Controller;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +43,7 @@ class Templates extends Controller
                 $item->delete();
             }
 
-            Flash::success('Successfully deleted those selected.');
+            Flash::success(Lang::get('octodevel.octomail::lang.controllers.templates.functions.index_onDelete.success'));
         }
 
         return $this->listRefresh();
@@ -59,7 +60,7 @@ class Templates extends Controller
                 $data = $item->attributes;
 
                 if(!$data)
-                    throw new \Exception(sprintf('One or more items cannot be found.'));
+                    throw new \Exception(sprintf(Lang::get('octodevel.octomail::lang.controllers.templates.functions.index_onDuplicate.no_data_error')));
 
                 // Insert data
                 $newItem = Template::find($itemId)->replicate()->beforeDuplicate();
@@ -67,7 +68,7 @@ class Templates extends Controller
 
             }
 
-            Flash::success('Successfully duplicate those selected.');
+            Flash::success(Lang::get('octodevel.octomail::lang.controllers.templates.functions.index_onDuplicate.success'));
         }
 
         return $this->listRefresh();
