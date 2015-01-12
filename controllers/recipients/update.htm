@@ -16,11 +16,12 @@
                 <button
                     type="submit"
                     data-request="onSave"
+                    data-request-data="redirect:0"
                     data-hotkey="ctrl+s"
                     data-hotkey-mac="cmd+s"
                     data-load-indicator="<?= e(trans('backend::lang.form.saving')) ?>"
                     class="btn btn-primary">
-                    <?= e(trans('backend::lang.form.create')) ?>
+                    <?= e(trans('backend::lang.form.save')) ?>
                 </button>
                 <button
                     type="button"
@@ -29,7 +30,7 @@
                     data-hotkey="ctrl+enter, cmd+enter"
                     data-load-indicator="<?= e(trans('backend::lang.form.saving')) ?>"
                     class="btn btn-default">
-                    <?= e(trans('backend::lang.form.create_and_close')) ?>
+                    <?= e(trans('backend::lang.form.save_and_close')) ?>
                 </button>
                 <button
                     type="button"
