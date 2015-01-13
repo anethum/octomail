@@ -206,10 +206,10 @@ class Template extends ComponentBase
 
         // Making custon validation
         $fields = explode(',', preg_replace('/\s/', '', $template['fields']));
+        $validation_rules = [];
 
-        if($fields)
+        if(trim($fields))
         {
-            $validation_rules = [];
             foreach ($fields as $field)
             {
                 $rules = explode("|", $field);

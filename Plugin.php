@@ -11,8 +11,9 @@ class Plugin extends PluginBase
         return [
             'name' => Lang::get('octodevel.octomail::lang.app.name'),
             'description' => Lang::get('octodevel.octomail::lang.app.description'),
-            'author' => Lang::get('octodevel.octomail::lang.app.author'),
-            'icon' => Lang::get('octodevel.octomail::lang.app.icon')
+            'author' => 'OctoDevel',
+            'homepage' => 'http://octodevel.com',
+            'icon' => 'icon-envelope'
         ];
     }
 

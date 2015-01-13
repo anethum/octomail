@@ -5,8 +5,6 @@ return [
     'app' => [
         'name' => 'Mail',
         'description' => 'Create front-end contact forms that allow to send email messages based on custom templates.',
-        'author' => 'Octo Devel',
-        'icon' => 'icon-envelope'
     ],
     'navigation' => [
         'templates' => 'Templates',

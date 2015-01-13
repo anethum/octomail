@@ -5,8 +5,6 @@ return [
     'app' => [
         'name' => 'Mail',
         'description' => 'Crie formulários de contato front-end que permitem enviar mensagens de e-mail baseado em modelos personalizados.',
-        'author' => 'Octo Devel',
-        'icon' => 'icon-envelope'
     ],
     'navigation' => [
         'templates' => 'Modelos',
