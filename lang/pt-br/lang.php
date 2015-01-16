@@ -17,7 +17,7 @@ return [
         'access_logs' => 'OctoMail - Visualizar Logs',
     ],
     'mailTemplates' => [
-        'autoresponse' => 'Enviar um e-mail de resposta para o usuário quando ele enviar uma mensagem do Mail.',
+        'autoresponse' => 'Enviar um e-mail de resitema para o usuário quando ele enviar uma mensagem do Mail.',
     ],
 
     // Models Definitions
@@ -45,7 +45,7 @@ return [
                     'title' => 'Título',
                     'slug' => 'Slug',
                     'fields' => 'Regras de Validação',
-                    'autoresponse' => 'Auto-resposta',
+                    'autoresponse' => 'Auto-resitema',
                     'lang' => 'Idioma',
                     'subject' => 'Assunto',
                     'sender_name' => 'Nome do Remetente',
@@ -176,20 +176,20 @@ return [
                     'description' => 'Selecione o modelo de e-mail.',
                 ],
                 'responseTemplate' => [
-                    'title' => 'Modelo de resposta',
-                    'description' => 'Selecione o modelo de e-mail de resposta.',
+                    'title' => 'Modelo de resitema',
+                    'description' => 'Selecione o modelo de e-mail de resitema.',
                 ],
                 'bodyField' => [
                     'title' => 'Nome do campo do corpo',
                     'description' => 'Defina aqui o campo de formulário que representa a mensagem do usuário. O nl2br será aplicado antes do envio.',
                 ],
                 'responseFieldName' => [
-                    'title' => 'Nome do campo de nome de resposta',
-                    'description' => 'Defina aqui o campo de formulário que representa o nome do destinatário que a mensagem de resposta automática será enviado.',
+                    'title' => 'Nome do campo de nome de resitema',
+                    'description' => 'Defina aqui o campo de formulário que representa o nome do destinatário que a mensagem de resitema automática será enviado.',
                 ],
                 'responseFieldEmail' => [
-                    'title' => 'Nome do campo de e-mail de resposta',
-                    'description' => 'Defina aqui o campo de formulário que representa o email do destinatário que a mensagem de resposta automática será enviado.',
+                    'title' => 'Nome do campo de e-mail de resitema',
+                    'description' => 'Defina aqui o campo de formulário que representa o email do destinatário que a mensagem de resitema automática será enviado.',
                 ],
             ],
             'functions' => [

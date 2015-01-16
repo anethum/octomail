@@ -19,9 +19,9 @@ class Template extends ComponentBase
 {
     use \October\Rain\Database\Traits\Validation;
 
-    public $table = 'octodevel_octomail_templates';
-    public $recipients = 'octodevel_octomail_tem_rec';
-    public $recipients_table = 'octodevel_octomail_recipients';
+    public $table = 'od_octomail_templates';
+    public $recipients = 'od_octomail_template_records';
+    public $recipients_table = 'od_octomail_recipients';
 
     public $aRName;
     public $aREmail;

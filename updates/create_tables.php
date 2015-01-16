@@ -29,6 +29,7 @@ class CreateTables extends Migration
                 $table->string('recipient_name')->nullable();
                 $table->string('recipient_email')->nullable();
                 $table->text('confirmation_text')->nullable();
+                $table->integer('spam')->default(1);
                 $table->timestamps();
             });
         }

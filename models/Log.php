@@ -5,10 +5,10 @@ use Model;
 class Log extends Model
 {
     use \October\Rain\Database\Traits\Validation;
-    
+
     public $rules = [];//must be present to use Validation
 
-    public $table = 'octodevel_octomail_logs';
+    public $table = 'od_octomail_logs';
     /*
      * Relations
      */

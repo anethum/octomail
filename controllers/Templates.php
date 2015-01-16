@@ -9,7 +9,7 @@ use OctoDevel\OctoMail\Models\Template;
 
 class Templates extends Controller
 {
-    public $table = 'octodevel_octomail_templates';
+    public $table = 'od_octomail_templates';
 
     public $implement = [
         'Backend.Behaviors.FormController',

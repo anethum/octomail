@@ -9,10 +9,10 @@ class Template extends Model
 {
     use \October\Rain\Database\Traits\Validation;
 
-    public $table = 'octodevel_octomail_templates';
+    public $table = 'od_octomail_templates';
 
     public $belongsToMany = [
-        'recipents' => ['OctoDevel\OctoMail\Models\Recipient','table' => 'octodevel_octomail_tem_rec']
+        'recipents' => ['OctoDevel\OctoMail\Models\Recipient','table' => 'od_octomail_template_records']
     ];
 
     /*

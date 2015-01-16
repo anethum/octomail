@@ -80,3 +80,9 @@
     - Translations applied to the plugin. Fixed showExternalParameter to showExternalParam property on component
 1.3.7:
     - Fixed delete button for recipient items and some translations
+1.3.8:
+    - Fixed issues and spam/flood prevent has been added
+1.3.9:
+    - Rename tables and add spam prevention
+    - add_spam_prevention.php
+    - rename_tables.php

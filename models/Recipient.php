@@ -8,7 +8,7 @@ class Recipient extends Model
 {
     use \October\Rain\Database\Traits\Validation;
 
-    public $table = 'octodevel_octomail_recipients';
+    public $table = 'od_octomail_recipients';
 
     /*
      * Validation

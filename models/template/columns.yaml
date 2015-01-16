@@ -12,6 +12,10 @@ columns:
     label: octodevel.octomail::lang.models.templates.columns.slug
     searchable: true
 
+  spam:
+    label: octodevel.octomail::lang.models.templates.columns.spam
+    searchable: false
+
   lang:
     label: octodevel.octomail::lang.models.templates.columns.lang
     searchable: false
